@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -45,7 +46,7 @@ $_faqContext
 ''';
 
       _model = GenerativeModel(
-        model: 'gemini-1.5-flash',
+        model: 'gemini-3.6-flash',
         apiKey: geminiApiKey,
         systemInstruction: Content.system(systemInstruction),
       );
@@ -53,7 +54,7 @@ $_faqContext
       _chat = _model.startChat();
       _isInitialized = true;
     } catch (e) {
-      print('Error initializing Gemini model: $e');
+      debugPrint('Error initializing Gemini model: $e');
     }
   }
 
@@ -85,6 +86,7 @@ $_faqContext
 
       return ChatMessageModel.bot(replyText, suggestions: suggestions);
     } catch (e) {
+      debugPrint('Gemini Chatbot Error: $e');
       return ChatMessageModel.bot(
         'Sorry, I am having trouble connecting to my AI brain right now. Please check your internet connection or try again later.',
       );
