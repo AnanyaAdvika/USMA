@@ -1,17 +1,214 @@
-# usma
+<div align="center">
+  <!-- You can replace this banner image with an assets/banner.png if available -->
+  <h1>🎓 USMA</h1>
+  <h3>Unified Scholarship Mobile Application</h3>
+  <p><strong>A Unified Single-Window Mobile Platform for MoTA ST Scholarships</strong></p>
 
-A new Flutter project.
+  <p>
+    <a href="https://sih.gov.in/sih2026PS"><img src="https://img.shields.io/badge/SIH%202026-Problem%20SIH26238-blue.svg?style=for-the-badge" alt="SIH 2026"></a>
+    <img src="https://img.shields.io/badge/Ministry-Ministry%20of%20Tribal%20Affairs-orange.svg?style=for-the-badge" alt="Ministry">
+    <img src="https://img.shields.io/badge/Framework-Flutter%203.19+-02569B.svg?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter">
+    <img src="https://img.shields.io/badge/State%20Management-Riverpod-1A237E.svg?style=for-the-badge" alt="Riverpod">
+    <img src="https://img.shields.io/badge/Backend-Firebase-FFCA28.svg?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase">
+    <img src="https://img.shields.io/badge/License-MIT-lightgrey.svg?style=for-the-badge" alt="License">
+  </p>
+</div>
 
-## Getting Started
+> **Problem Statement (SIH26238):** Development of a Unified Scholarship Mobile Application offering a consolidated single-window experience for Ministry of Tribal Affairs (MoTA) Scheduled Tribe (ST) scholarships.  
+> **Target Beneficiaries:** ST Students, Educational Institutions, Verification Officers, and MoTA Administrators.  
+> **Core Objective:** Eliminate fragmented scholarship portals, reduce application drop-off rates, provide real-time DBT tracking, and enable offline-ready multilingual accessibility.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 📑 Table of Contents
+- [📌 Overview](#-overview)
+- [✨ Key Modules & Technical Features](#-key-modules--technical-features)
+- [🏗️ System Architecture](#️-system-architecture)
+- [📂 Repository Structure](#-repository-structure)
+- [⚙️ Installation & Setup](#️-installation--setup)
+- [📱 APK Release & Testing](#-apk-release--testing)
+- [🎯 SIH Compliance Verification](#-sih-compliance-verification)
+- [📄 License](#-license)
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📌 Overview
+
+Currently, Scheduled Tribe (ST) students face steep hurdles navigating disparate state and central scholarship portals, ambiguous eligibility criteria, untracked Direct Benefit Transfer (DBT) disbursements, and poor mobile network connectivity in remote tribal pockets.
+
+**USMA (Unified Scholarship Mobile Application)** addresses these gaps with a student-centric, cloud-native Flutter mobile application tailored to MoTA scholarship schemes:
+1. **Consolidated Single-Window Dashboard:** Complete visibility into all central & state ST scholarship schemes with deadline alerts and eligibility match scoring.
+2. **Dynamic Eligibility Engine:** Real-time eligibility evaluation based on academic, income, domicile, and quota criteria before document submission.
+3. **End-to-End DBT & Disbursement Tracker:** Stage-by-stage transparent tracking from institutional verification to bank PFMS credit.
+4. **Digital Document Vault:** Secure file uploads, caching, and document status verification eliminating repeated physical paperwork.
+5. **Contextual AI Chatbot & Multilingual Support:** In-app multilingual query resolution and FAQ assistance for first-generation scholars.
+6. **Offline-Resilient Architecture:** Local caching powered by Hive ensuring application status and submitted profiles remain accessible even in poor connectivity zones.
+
+---
+
+## ✨ Key Modules & Technical Features
+
+### 1. 📊 Consolidated Dashboard (`features/dashboard`)
+- Unified interface displaying ongoing scholarship cycles, key deadlines, active application statuses, and urgent notices.
+- Personalized scholarship recommendations based on student profile attributes.
+
+### 2. 🎯 Dynamic Eligibility Checker (`features/eligibility`)
+- Multi-parameter rule evaluation engine matching applicants against national and state ST schemes.
+- Instant pre-check preventing invalid submissions and reducing rejection overhead for verification officers.
+
+### 3. 📝 Applications & Lifecycle Tracking (`features/applications`)
+- Intuitive step-by-step application submission workflow.
+- Granular tracking with timeline milestones: `Draft` ➔ `Submitted` ➔ `Institute Verified` ➔ `State Approved` ➔ `Sanctioned` ➔ `Disbursed`.
+
+### 4. 💳 DBT & Disbursement Monitoring (`features/disbursements`)
+- Transparent tracking of financial disbursements, transaction IDs, payment batch numbers, and PFMS reconciliation.
+- Notification dispatch on milestone transitions via Firebase Cloud Messaging (FCM).
+
+### 5. 🤖 Support Chatbot & Helpdesk (`features/chatbot`)
+- Integrated automated chatbot for instantaneous assistance regarding criteria, guidelines, and document prerequisites.
+- Offline-ready FAQ knowledge base stored natively (`assets/faq/faq.json`).
+
+### 6. 📁 Secure Document Management (`features/documents`)
+- In-app camera and file picker integration (`file_picker`, `image_picker`) supporting certificates, marks sheets, and bank passbooks.
+- Encrypted storage uploads via Firebase Storage with file integrity validation.
+
+### 7. 🔒 Secure Authentication & Role Management (`features/auth`)
+- Robust auth workflows supporting email/password and mobile OTP verification via Firebase Auth.
+- Session persistence and role-based access control.
+
+---
+
+## 🏗️ System Architecture
+
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│                     Presentation Layer                          │
+│        (Flutter Material Design 3 + Riverpod State Management)  │
+└────────────────┬───────────────────────────────┬────────────────┘
+                 │                               │
+                 ▼                               ▼
+┌────────────────────────────────┐ ┌──────────────────────────────┐
+│       Feature Controllers      │ │     Core App Infrastructure  │
+│  - Dashboard & Eligibility     │ │  - AppRouter (GoRouter)      │
+│  - Applications & Tracking     │ │  - AppTheme & Design Tokens  │
+│  - Chatbot & Notifications     │ │  - Localization & Constants  │
+│  - Documents & Profile         │ │  - Network Connectivity Watch│
+└────────────────┬───────────────┘ └──────────────┬───────────────┘
+                 │                                │
+                 ▼                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                     Data & Domain Services                      │
+│        Repository Pattern • DTO Mappings • Local Cache Engine   │
+└────────────────┬───────────────────────────────┬────────────────┘
+                 │                               │
+         ┌───────┴───────┐               ┌───────┴───────┐
+         ▼               ▼               ▼               ▼
+┌─────────────────┐ ┌─────────┐ ┌─────────────────┐ ┌───────────┐
+│ Cloud Firestore │ │ Firebase│ │ Firebase Cloud  │ │   Hive    │
+│ (NoSQL Database)│ │ Storage │ │ Messaging (FCM) │ │ (Offline) │
+└─────────────────┘ └─────────┘ └─────────────────┘ └───────────┘
+```
+
+---
+
+## 📂 Repository Structure
+
+```plaintext
+usma/
+├── android/                   # Native Android configuration & Gradle build scripts
+├── assets/                    # Static assets, fonts, and offline FAQ schemas
+│   └── faq/
+│       └── faq.json           # Offline-accessible FAQ database
+├── lib/
+│   ├── main.dart              # Application entry point & service initialization
+│   ├── app.dart               # Root MaterialApp configuration & theme setup
+│   ├── core/                  # Core abstractions and shared utilities
+│   │   ├── network/           # Connectivity listeners & HTTP clients
+│   │   ├── router/            # GoRouter navigation paths & guards
+│   │   ├── theme/             # Color tokens, typography, and component themes
+│   │   └── utils/             # Formatters, validators, and helper utilities
+│   └── features/              # Feature-driven modular architecture
+│       ├── applications/      # Scholarship application workflows
+│       ├── auth/              # Authentication & session controllers
+│       ├── chatbot/           # Interactive virtual assistant & FAQ engine
+│       ├── dashboard/         # Single-view student dashboard
+│       ├── disbursements/     # DBT tracking & transaction history
+│       ├── documents/         # Secure document upload & vault
+│       ├── eligibility/       # Rule-based eligibility assessment
+│       ├── notifications/     # FCM push notifications & inbox
+│       ├── profile/           # Student profile & academic background
+│       └── settings/          # Language preferences & user settings
+├── firestore.rules            # Firestore security rules
+├── firestore.indexes.json      # Database compound indexes
+├── firebase.json              # Firebase project configuration
+└── pubspec.yaml               # Project dependencies and environment specs
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Prerequisites
+- **Flutter SDK:** `>= 3.19.0` (Dart SDK `>= 3.3.0 < 4.0.0`)
+- **Android SDK:** Compile SDK `36`, Minimum SDK `21`
+- **Java Development Kit (JDK):** OpenJDK 17 or 21
+- **Firebase CLI:** Installed and logged in (`npm install -g firebase-tools`)
+
+### 2. Clone the Repository
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd usma
+```
+
+### 3. Install Dependencies
+```bash
+flutter pub get
+```
+
+### 4. Firebase Configuration
+1. Place your `google-services.json` inside `android/app/`.
+2. Ensure Firebase services (Auth, Firestore, Storage, Cloud Messaging) are activated in your Firebase Console.
+3. Deploy Firestore rules and indexes:
+   ```bash
+   firebase deploy --only firestore
+   ```
+
+### 5. Run the Application
+```bash
+# Debug run on connected Android device or emulator
+flutter run
+```
+
+---
+
+## 📱 APK Release & Testing
+
+To generate an optimized release APK for testing and deployment:
+
+```bash
+flutter build apk --release
+```
+The compiled APK will be generated at:
+```plaintext
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+*(Pre-built release package `usma-release.apk` is available in the root directory and attached to GitHub Releases for direct installation).*
+
+---
+
+## 🎯 SIH Compliance Verification
+
+- [x] **Unified MoTA Scholarship View:** Consolidated visibility over pre-matric, post-matric, and higher education ST schemes.
+- [x] **Transparent DBT Disbursement Tracking:** Step-wise audit trail from institutional sanctioning to bank transfer.
+- [x] **Offline-First Resilience:** In-memory & local persistent storage via Hive for students with intermittent remote connectivity.
+- [x] **Automated Eligibility Evaluation:** Interactive criteria verification reducing administrative overhead.
+- [x] **Digital Document Repository:** Secure paperless credential submission with integrity checks.
+- [x] **Multilingual & Conversational Support:** Integrated AI chatbot with offline FAQ fallbacks for intuitive user onboarding.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the LICENSE file for details.  
+Developed with ❤️ for the **Smart India Hackathon (SIH 2026)**.
