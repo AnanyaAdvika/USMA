@@ -64,6 +64,15 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            tooltip: 'Restart Conversation',
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: () {
+              ref.read(chatMessagesProvider.notifier).clearChat();
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [

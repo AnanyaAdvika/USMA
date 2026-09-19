@@ -2,91 +2,91 @@
   {
     "id": "faq_01",
     "question": "What is USMA?",
-    "answer": "USMA (Unified Scholarship Mobile Application) lets Scheduled Tribe students track all five MoTA scholarship schemes — Pre-Matric, Post-Matric, Top Class, NFST, and NOS — in one place.",
-    "keywords": ["usma", "what", "app", "about"]
+    "answer": "USMA (Unified Scholarship Mobile Application) is a single-window mobile platform developed for MoTA (Ministry of Tribal Affairs) Scheduled Tribe students to discover, apply, track, and manage all 5 official scholarship schemes: Pre-Matric, Post-Matric, Top Class Education, National Fellowship (NFST), and National Overseas Scholarship (NOS).",
+    "keywords": ["usma", "what", "app", "about", "overview"]
   },
   {
     "id": "faq_02",
-    "question": "Which scholarship schemes does USMA cover?",
-    "answer": "USMA covers five Ministry of Tribal Affairs schemes: Pre-Matric Scholarship, Post-Matric Scholarship, Top Class Education, National Fellowship for ST (NFST), and National Overseas Scholarship (NOS).",
-    "keywords": ["schemes", "scholarship", "which", "list", "cover"]
+    "question": "Which official scholarship schemes are covered under MoTA?",
+    "answer": "Ministry of Tribal Affairs (tribal.nic.in) implements 5 major schemes:\n1. Pre-Matric Scholarship for ST Students (Class 9 & 10)\n2. Post-Matric Scholarship for ST Students (Class 11 to Ph.D)\n3. National Scholarship Scheme (Top Class Education in 265 Premier Institutes)\n4. National Fellowship for ST Students (NFST for M.Phil & Ph.D)\n5. National Overseas Scholarship (NOS for Master's/Ph.D abroad)",
+    "keywords": ["schemes", "scholarship", "which", "list", "cover", "mota", "official"]
   },
   {
     "id": "faq_03",
-    "question": "How do I link my existing application?",
-    "answer": "Go to the Dashboard and tap 'Link Application'. Select your source portal (NSP, SFMP, or NOS), choose the scheme, and enter your application reference ID. USMA will fetch and display your application status.",
-    "keywords": ["link", "application", "existing", "how", "connect", "import"]
+    "question": "What are the rules and financial rates for Pre-Matric ST Scholarship?",
+    "answer": "• Target: ST Students in Classes IX & X.\n• Family Income Limit: Up to ₹2.50 Lakhs per annum.\n• Rates: ₹225/month for Day Scholars & ₹525/month for Hostellers (for 10 months/year).\n• Fund Sharing: 75:25 (Centre:State), 90:10 for North-East & Hilly States (J&K, HP, UK), and 100% for UTs without legislature.\n• Portal: https://dbttribal.gov.in/",
+    "keywords": ["pre-matric", "prematric", "class 9", "class 10", "rate", "allowance", "day scholar", "hosteller"]
   },
   {
     "id": "faq_04",
-    "question": "What documents do I need?",
-    "answer": "Common required documents include: ST Certificate, Income Certificate, Identity Proof (Aadhaar), Academic Marksheets, and Institution/Admission Certificate. Exact requirements vary by scheme.",
-    "keywords": ["documents", "required", "need", "papers", "certificate"]
+    "question": "What are the features of Post-Matric Scholarship for ST Students (PMS-ST)?",
+    "answer": "• Target: ST Students pursuing Class XI, XII, ITI, Diploma, Graduation, Post-Graduation, or Ph.D.\n• Family Income Limit: Up to ₹2.50 Lakhs per annum.\n• Benefits: 1) Full non-refundable compulsory fees charged by institution. 2) Maintenance allowance ranging from ₹230 to ₹1,200 per month.\n• Fund Sharing: 75:25 (Centre:State), 90:10 (NE/Hilly States), 100% (UTs).\n• Portal: https://dbttribal.gov.in/",
+    "keywords": ["post-matric", "postmatric", "college", "degree", "graduation", "btech", "class 11", "class 12", "maintenance allowance"]
   },
   {
     "id": "faq_05",
-    "question": "What does 'deficiency raised' mean?",
-    "answer": "It means the verifying authority found an issue with your application — such as a missing or unclear document. Check the deficiency notes in your Application Timeline and upload the corrected document in the Document Wallet.",
-    "keywords": ["deficiency", "raised", "mean", "status", "issue", "problem"]
+    "question": "What is the National Scholarship Scheme for Top Class Education?",
+    "answer": "• Target: ST Students admitted to 265 notified premier institutes (IITs, NITs, IIMs, AIIMS, NLUs, etc.).\n• Family Income Limit: Up to ₹6.00 Lakhs per annum.\n• Coverage: Full tuition fees + living allowance (₹3,000/month) + books & stationery allowance (₹5,000/year) + one-time computer assistance (₹45,000).\n• Portal: https://scholarships.gov.in (NSP)",
+    "keywords": ["top class", "iit", "iim", "nit", "premier", "aiims", "national scholarship", "computer allowance"]
   },
   {
     "id": "faq_06",
-    "question": "Can I apply for more than one scholarship at a time?",
-    "answer": "As per MoTA rules, you can hold only one active scholarship or fellowship at a time. The Eligibility Checker will warn you if you already have an active scholarship before you proceed.",
-    "keywords": ["multiple", "more", "one", "two", "apply", "same", "time", "eligibility"]
+    "question": "What are the highlights of National Fellowship for ST Students (NFST)?",
+    "answer": "• Target: ST Students pursuing full-time M.Phil & Ph.D degrees in UGC recognized universities & institutes of national importance.\n• Annual Slots: 750 fresh fellowships awarded every year on Master's merit.\n• Special Preference: Given to female scholars, Divyangjan (PwD), and Particularly Vulnerable Tribal Groups (PVTGs).\n• Family Income Limit: Up to ₹6.00 Lakhs per annum.\n• Fellowship Amount: M.Phil @ ₹25,000/month, Ph.D @ ₹28,000/month + HRA + Contingency.\n• Portal: https://fellowship.tribal.gov.in/",
+    "keywords": ["nfst", "fellowship", "phd", "mphil", "research", "pvtg", "divyangjan", "stipend"]
   },
   {
     "id": "faq_07",
-    "question": "How will I know when my status changes?",
-    "answer": "USMA sends push notifications whenever your application status changes — for example, when it moves from 'Under Verification' to 'Sanctioned' or if a deficiency is raised.",
-    "keywords": ["notification", "status", "change", "alert", "update", "know"]
+    "question": "What is National Overseas Scholarship (NOS) for ST Students?",
+    "answer": "• Target: Meritorious ST students pursuing Master's, Ph.D, and Post-Doctoral research in foreign universities.\n• Awards: 20 slots/year (17 STs + 3 PVTGs).\n• Family Income Limit: Up to ₹6.00 Lakhs per annum.\n• Financial Assistance: Full tuition fees + Annual Maintenance Allowance of USD 15,400 + Contingency Allowance USD 1,532 + Visa fees + Medical Insurance + Air passage expenses.\n• Portal: https://overseas.tribal.gov.in/",
+    "keywords": ["nos", "overseas", "foreign", "abroad", "international", "usa", "uk", "dollar allowance"]
   },
   {
     "id": "faq_08",
-    "question": "What is DBT and how is money disbursed?",
-    "answer": "DBT (Direct Benefit Transfer) sends scholarship money directly to your bank account. You can view your disbursement history including amount, date, and DBT reference number in the Disbursements tab.",
-    "keywords": ["dbt", "money", "payment", "disbursement", "bank", "transfer"]
+    "question": "How do I link my existing NSP or state portal application?",
+    "answer": "Go to the Dashboard and tap 'Link Application'. Select your source portal (NSP, SFMP, or NOS), choose the scheme, and enter your application reference ID. USMA will fetch and display your live application status.",
+    "keywords": ["link", "application", "existing", "how", "connect", "import", "nsp"]
   },
   {
     "id": "faq_09",
-    "question": "What is DigiLocker and how does it work with USMA?",
-    "answer": "DigiLocker is a government platform for storing verified digital documents. In USMA, you can link documents from DigiLocker to avoid uploading them manually. These documents are pre-verified.",
-    "keywords": ["digilocker", "digital", "locker", "verified", "link"]
+    "question": "What documents are mandatory for MoTA scholarship application?",
+    "answer": "Mandatory documents:\n1. ST Community Certificate (issued by Tehsildar / SDO / Tehsildar)\n2. Valid Income Certificate for current financial year\n3. Aadhaar Card (linked to mobile & NPCI bank account)\n4. Previous Year Academic Marksheet & Passing Certificate\n5. Admission Fee Receipt & Bonafide Student Certificate\n6. Bank Passbook page (showing Account No. & IFSC)",
+    "keywords": ["documents", "required", "need", "papers", "certificate", "income certificate", "caste certificate"]
   },
   {
     "id": "faq_10",
-    "question": "My application has been under verification for a long time. What should I do?",
-    "answer": "Verification timelines depend on your institution and state authorities. Use the 'Sync Status' button on your Application Timeline to check for updates. If it remains unchanged for over 30 days, contact your institution's scholarship nodal officer.",
-    "keywords": ["delay", "long", "time", "waiting", "stuck", "verification", "slow"]
+    "question": "What does 'deficiency raised' mean and how to fix it?",
+    "answer": "Deficiency raised means the verification officer (Institute or State Nodal Officer) found an error — like a blurred marksheet or invalid income certificate.\nFix: Open 'Applications', check officer comments, upload the revised document in 'Document Vault', and resubmit before the deadline.",
+    "keywords": ["deficiency", "raised", "mean", "status", "issue", "problem", "defect", "rejection"]
   },
   {
     "id": "faq_11",
-    "question": "How do I update my profile information?",
-    "answer": "Go to the Profile tab in the bottom navigation bar. Tap the edit button to update your name, institution, contact details, or ST certificate reference number. Remember to save your changes.",
-    "keywords": ["profile", "update", "edit", "change", "information", "details"]
+    "question": "Can I hold two government scholarships at the same time?",
+    "answer": "No. As per Ministry of Tribal Affairs (MoTA) guidelines, a student can avail only ONE government scholarship or fellowship at any given time. If you apply for multiple schemes, your application will be flagged during central verification.",
+    "keywords": ["multiple", "more", "one", "two", "apply", "same", "time", "eligibility", "rule"]
   },
   {
     "id": "faq_12",
-    "question": "Is my data secure?",
-    "answer": "Yes. USMA uses Firebase security rules ensuring only you can access your own data. No other user or unauthorized person can view your applications, documents, or personal information.",
-    "keywords": ["secure", "security", "data", "safe", "privacy", "protect"]
+    "question": "What is DBT and why is Aadhaar-NPCI seeding mandatory?",
+    "answer": "DBT (Direct Benefit Transfer) sends scholarship funds directly into your bank account through the Public Financial Management System (PFMS).\nAadhaar seeding with NPCI is mandatory because payments are disbursed using Aadhaar-based Mapper routing to prevent middleman leakages.",
+    "keywords": ["dbt", "money", "payment", "disbursement", "bank", "transfer", "npci", "pfms", "aadhaar"]
   },
   {
     "id": "faq_13",
-    "question": "Can I use USMA offline?",
-    "answer": "Yes, partially. USMA caches your dashboard and application data locally. You can view your existing information offline, but actions like linking applications or uploading documents require an internet connection.",
-    "keywords": ["offline", "internet", "without", "no connection", "cached"]
+    "question": "How does DigiLocker integration work with USMA?",
+    "answer": "DigiLocker is a secure Government of India digital document repository. In USMA, you can link your DigiLocker account to automatically fetch pre-verified ST certificates, Aadhaar cards, and Class 10/12 marksheets without manual scanning.",
+    "keywords": ["digilocker", "digital", "locker", "verified", "link", "auto fetch"]
   },
   {
     "id": "faq_14",
-    "question": "What is the Pre-Matric scholarship?",
-    "answer": "The Pre-Matric Scholarship is for ST students studying in Class 9 and 10. It covers tuition fees, maintenance allowance, and other incidentals to support students before matriculation.",
-    "keywords": ["pre-matric", "prematric", "class 9", "class 10", "school"]
+    "question": "Where can I register grievances or contact MoTA Helpdesk?",
+    "answer": "• Official Portal: https://tribal.nic.in/Grievance/\n• MoTA Scholarship Division Email: tribal-scholarship@gov.in\n• Fellowship Support: fellowship-tribal@nic.in\n• Overseas Support: overseas-tribal@nic.in\n• NSP Toll-Free Helpline: 0120-6619540",
+    "keywords": ["grievance", "helpline", "contact", "support", "email", "phone", "complain", "nodal officer"]
   },
   {
     "id": "faq_15",
-    "question": "What is NFST?",
-    "answer": "The National Fellowship for Scheduled Tribes (NFST) supports ST students pursuing M.Phil and Ph.D research. It provides a monthly fellowship stipend and research contingency grant.",
-    "keywords": ["nfst", "fellowship", "research", "phd", "mphil"]
+    "question": "Can I use USMA offline?",
+    "answer": "Yes! USMA includes local offline caching powered by Hive. You can check your application timeline, view saved documents, and access scholarship criteria without an active internet connection.",
+    "keywords": ["offline", "internet", "without", "no connection", "cached", "hive"]
   }
 ]
