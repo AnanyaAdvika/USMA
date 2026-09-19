@@ -4,14 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import '../domain/models/chat_message_model.dart';
 
+import '../../../../core/config/api_keys.dart';
+
 // =========================================================================
 // ⚠️ GEMINI API KEY CONFIGURATION ⚠️
-// Pass via --dart-define=GEMINI_API_KEY=your_key at build/run time,
-// or provide a local uncommitted configuration.
+// Prioritizes compile-time --dart-define=GEMINI_API_KEY, then local config.
 // =========================================================================
 const String geminiApiKey = String.fromEnvironment(
   'GEMINI_API_KEY',
-  defaultValue: '',
+  defaultValue: localGeminiApiKey,
 );
 
 class ChatbotService {
