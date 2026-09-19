@@ -1,0 +1,92 @@
+[
+  {
+    "id": "faq_01",
+    "question": "What is USMA?",
+    "answer": "USMA (Unified Scholarship Mobile Application) lets Scheduled Tribe students track all five MoTA scholarship schemes — Pre-Matric, Post-Matric, Top Class, NFST, and NOS — in one place.",
+    "keywords": ["usma", "what", "app", "about"]
+  },
+  {
+    "id": "faq_02",
+    "question": "Which scholarship schemes does USMA cover?",
+    "answer": "USMA covers five Ministry of Tribal Affairs schemes: Pre-Matric Scholarship, Post-Matric Scholarship, Top Class Education, National Fellowship for ST (NFST), and National Overseas Scholarship (NOS).",
+    "keywords": ["schemes", "scholarship", "which", "list", "cover"]
+  },
+  {
+    "id": "faq_03",
+    "question": "How do I link my existing application?",
+    "answer": "Go to the Dashboard and tap 'Link Application'. Select your source portal (NSP, SFMP, or NOS), choose the scheme, and enter your application reference ID. USMA will fetch and display your application status.",
+    "keywords": ["link", "application", "existing", "how", "connect", "import"]
+  },
+  {
+    "id": "faq_04",
+    "question": "What documents do I need?",
+    "answer": "Common required documents include: ST Certificate, Income Certificate, Identity Proof (Aadhaar), Academic Marksheets, and Institution/Admission Certificate. Exact requirements vary by scheme.",
+    "keywords": ["documents", "required", "need", "papers", "certificate"]
+  },
+  {
+    "id": "faq_05",
+    "question": "What does 'deficiency raised' mean?",
+    "answer": "It means the verifying authority found an issue with your application — such as a missing or unclear document. Check the deficiency notes in your Application Timeline and upload the corrected document in the Document Wallet.",
+    "keywords": ["deficiency", "raised", "mean", "status", "issue", "problem"]
+  },
+  {
+    "id": "faq_06",
+    "question": "Can I apply for more than one scholarship at a time?",
+    "answer": "As per MoTA rules, you can hold only one active scholarship or fellowship at a time. The Eligibility Checker will warn you if you already have an active scholarship before you proceed.",
+    "keywords": ["multiple", "more", "one", "two", "apply", "same", "time", "eligibility"]
+  },
+  {
+    "id": "faq_07",
+    "question": "How will I know when my status changes?",
+    "answer": "USMA sends push notifications whenever your application status changes — for example, when it moves from 'Under Verification' to 'Sanctioned' or if a deficiency is raised.",
+    "keywords": ["notification", "status", "change", "alert", "update", "know"]
+  },
+  {
+    "id": "faq_08",
+    "question": "What is DBT and how is money disbursed?",
+    "answer": "DBT (Direct Benefit Transfer) sends scholarship money directly to your bank account. You can view your disbursement history including amount, date, and DBT reference number in the Disbursements tab.",
+    "keywords": ["dbt", "money", "payment", "disbursement", "bank", "transfer"]
+  },
+  {
+    "id": "faq_09",
+    "question": "What is DigiLocker and how does it work with USMA?",
+    "answer": "DigiLocker is a government platform for storing verified digital documents. In USMA, you can link documents from DigiLocker to avoid uploading them manually. These documents are pre-verified.",
+    "keywords": ["digilocker", "digital", "locker", "verified", "link"]
+  },
+  {
+    "id": "faq_10",
+    "question": "My application has been under verification for a long time. What should I do?",
+    "answer": "Verification timelines depend on your institution and state authorities. Use the 'Sync Status' button on your Application Timeline to check for updates. If it remains unchanged for over 30 days, contact your institution's scholarship nodal officer.",
+    "keywords": ["delay", "long", "time", "waiting", "stuck", "verification", "slow"]
+  },
+  {
+    "id": "faq_11",
+    "question": "How do I update my profile information?",
+    "answer": "Go to the Profile tab in the bottom navigation bar. Tap the edit button to update your name, institution, contact details, or ST certificate reference number. Remember to save your changes.",
+    "keywords": ["profile", "update", "edit", "change", "information", "details"]
+  },
+  {
+    "id": "faq_12",
+    "question": "Is my data secure?",
+    "answer": "Yes. USMA uses Firebase security rules ensuring only you can access your own data. No other user or unauthorized person can view your applications, documents, or personal information.",
+    "keywords": ["secure", "security", "data", "safe", "privacy", "protect"]
+  },
+  {
+    "id": "faq_13",
+    "question": "Can I use USMA offline?",
+    "answer": "Yes, partially. USMA caches your dashboard and application data locally. You can view your existing information offline, but actions like linking applications or uploading documents require an internet connection.",
+    "keywords": ["offline", "internet", "without", "no connection", "cached"]
+  },
+  {
+    "id": "faq_14",
+    "question": "What is the Pre-Matric scholarship?",
+    "answer": "The Pre-Matric Scholarship is for ST students studying in Class 9 and 10. It covers tuition fees, maintenance allowance, and other incidentals to support students before matriculation.",
+    "keywords": ["pre-matric", "prematric", "class 9", "class 10", "school"]
+  },
+  {
+    "id": "faq_15",
+    "question": "What is NFST?",
+    "answer": "The National Fellowship for Scheduled Tribes (NFST) supports ST students pursuing M.Phil and Ph.D research. It provides a monthly fellowship stipend and research contingency grant.",
+    "keywords": ["nfst", "fellowship", "research", "phd", "mphil"]
+  }
+]
