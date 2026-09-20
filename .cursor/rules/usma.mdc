@@ -1,0 +1,38 @@
+---
+description: USMA project rules and canonical data model
+alwaysApply: true
+---
+# USMA rules
+
+## Architecture
+- Feature-first: lib/features/<feature>/{data,domain,presentation}. Domain code is pure Dart (no Flutter or Firebase imports). Cross-cutting code: lib/core/{config,errors,integration,network,router,theme,utils}.
+- Every external system sits behind an abstract interface with Mock* and Live/Firestore* implementations, selected by AppConfig.dataMode (--dart-define=DATA_MODE=demo|live, default demo). Optional --dart-define=USE_EMULATOR=true (live mode against the Firebase Emulator Suite).
+- Demo mode never initialises Firebase and needs no local files. Live mode initialises Firebase from FirebaseOptions built from --dart-define values (no google-services.json / firebase_options.dart required to compile).
+- Domain code returns enums/codes; presentation maps them to text (so i18n extraction stays mechanical).
+
+## Errors and honesty
+- No empty `catch (_) {}`. Typed failures in lib/core/errors (sealed Failure hierarchy) + ErrorMapper; show them in the UI with ErrorView. Never silently fall back to demo data in live mode.
+- Anything mocked is labelled SIMULATED in code (class docs) and in the UI (visible chip). Never invent real government endpoints, IDs or API specs. Live stubs throw UnimplementedError('needs MoTA API credentials').
+- Scheme rules live in assets/schemes/scheme_rules.json, never in widgets.
+- No secrets in the client. No hard-coded user IDs. Never log or store a full 12-digit Aadhaar or a full bank account number; mask in UI (XXXX-XXXX-1234).
+
+## Product invariants
+- ONE scholarship at a time per student profile (ActiveScholarshipGuard, across all source systems).
+- Verification MISMATCH/UNAVAILABLE never blocks submission; it opens a ManualReviewCase.
+- Verification status, sanctionedAmount, status transitions, timeline, disbursement fields are written only by the server / verification layer, never by the client.
+
+## UI
+- 48dp minimum tap targets, Semantics labels, layouts that survive 200% text scale at 360dp width.
+
+## Definition of done
+- `flutter analyze` clean, `flutter test` passes, new logic has unit tests, README updated if behaviour changed, list everything not verified.
+
+## Canonical Firestore data model (all student data under users/{uid})
+- users/{uid}: profile (name, dateOfBirth, gender, category, isPvtg, disabilityPercent, state, district, language, outreachOptOut). Role comes from custom claims (STUDENT default; INSTITUTE_NODAL, DISTRICT_WELFARE, STATE_NODAL, MOTA_ADMIN), never from a client-writable field.
+- users/{uid}/children/{childId}: child profiles for guardian accounts (max 5). Every student-owned record carries profileId (= uid for self).
+- users/{uid}/applications/{appId} (+ /timeline/{eventId}, server-written)
+- users/{uid}/documents/{docId}: metadata only (type, storagePath, sha256, issuedAt, expiresAt, source, verificationStatus [server-set]).
+- users/{uid}/disbursements/{id}, users/{uid}/notifications/{id} (student may update only read/readAt), users/{uid}/devices/{deviceId}, users/{uid}/consents/{id}, users/{uid}/verificationReports/{id} (student read-only), users/{uid}/chats/{sessionId}/messages/{id}.
+- manualReviewCases/{caseId} (top-level; carries studentUid + jurisdiction fields; student may read only their own).
+- auditLogs/{id}: server-only write; MOTA_ADMIN read.
+- Every query in the code must be covered by firestore.indexes.json and by rules. Keep a comment or test that maps query → index.
