@@ -1,162 +1,200 @@
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../domain/models/application_model.dart';
+
+import '../../../core/config/app_config.dart';
+import '../../../core/errors/error_mapper.dart';
+import '../../../core/errors/failures.dart';
 import '../../auth/data/auth_repository.dart';
+import '../domain/models/application_model.dart';
+import '../domain/scholarship_uniqueness.dart';
 
 abstract class IApplicationsRepository {
   Future<List<ApplicationModel>> getApplications(String userId);
-  Future<ApplicationModel?> getApplicationById(String applicationId);
+  Future<ApplicationModel> getApplicationById(String applicationId);
   Future<ApplicationModel> submitApplication(ApplicationModel application);
 }
 
-class ApplicationsRepository implements IApplicationsRepository {
-  final FirebaseFirestore? _firestore;
-
-  final List<ApplicationModel> _localApplications = [
+List<ApplicationModel> _simulatedApplicationsFor(String userId) {
+  final now = DateTime.now();
+  return [
     ApplicationModel(
       id: 'APP-2026-ST-8821',
-      userId: 'demo_user_001',
-      schemeId: 'mota_pms_st_01',
-      schemeTitle: 'Post-Matric Scholarship for ST Students (PMS-ST)',
+      userId: userId,
+      schemeId: 'post_matric',
+      schemeTitle: 'Post-Matric Scholarship for ST Students',
       academicYear: '2026-2027',
       instituteName: 'National Institute of Technology, Rourkela',
       courseName: 'B.Tech Computer Science & Engineering (Year 3)',
-      sanctionedAmount: 85000.0,
-      status: 'MINISTRY_APPROVED',
-      submittedAt: DateTime.now().subtract(const Duration(days: 28)),
-      updatedAt: DateTime.now().subtract(const Duration(days: 2)),
-      timeline: [
-        TimelineEvent(
-          title: 'Application Submitted',
-          description: 'Application successfully verified with DigiLocker documents.',
-          timestamp: DateTime.now().subtract(const Duration(days: 28)),
-          isCompleted: true,
-        ),
-        TimelineEvent(
-          title: 'Institute Verification (AISHE)',
-          description: 'Verified by Nodal Officer, NIT Rourkela.',
-          timestamp: DateTime.now().subtract(const Duration(days: 20)),
-          isCompleted: true,
-        ),
-        TimelineEvent(
-          title: 'District & State Welfare Verification',
-          description: 'Caste & Income certified by District Welfare Office, Mayurbhanj.',
-          timestamp: DateTime.now().subtract(const Duration(days: 10)),
-          isCompleted: true,
-        ),
-        TimelineEvent(
-          title: 'Ministry Sanction & DBT PFMS Queued',
-          description: 'Sanction order issued by Ministry of Tribal Affairs (MoTA).',
-          timestamp: DateTime.now().subtract(const Duration(days: 2)),
-          isCompleted: true,
-        ),
-        TimelineEvent(
-          title: 'Direct Bank Transfer (DBT)',
-          description: 'Aadhaar Payment Bridge System transfer into seeded bank account.',
-          timestamp: DateTime.now().add(const Duration(days: 5)),
-          isCompleted: false,
-        ),
+      sanctionedAmount: 85000,
+      status: 'sanctioned',
+      submittedAt: now.subtract(const Duration(days: 28)),
+      updatedAt: now.subtract(const Duration(days: 2)),
+      simulated: true,
+      deficiencies: const [
+        'Institute asked for a clearer fee receipt (does not block tracking).',
       ],
-    ),
-    ApplicationModel(
-      id: 'APP-2026-ST-5190',
-      userId: 'demo_user_001',
-      schemeId: 'mota_top_class_03',
-      schemeTitle: 'National Scholarship for Top Class Education for ST Students',
-      academicYear: '2026-2027',
-      instituteName: 'Indian Institute of Technology, Kharagpur',
-      courseName: 'M.Tech Artificial Intelligence',
-      sanctionedAmount: 200000.0,
-      status: 'INSTITUTE_VERIFIED',
-      submittedAt: DateTime.now().subtract(const Duration(days: 14)),
-      updatedAt: DateTime.now().subtract(const Duration(days: 6)),
       timeline: [
         TimelineEvent(
-          title: 'Application Submitted',
-          description: 'Submitted online with e-KYC authentication.',
-          timestamp: DateTime.now().subtract(const Duration(days: 14)),
+          title: 'Submitted',
+          description: 'SIMULATED: application received with DigiLocker wallet reuse.',
+          timestamp: now.subtract(const Duration(days: 28)),
           isCompleted: true,
         ),
         TimelineEvent(
-          title: 'Institute Verification (AISHE)',
-          description: 'Academic standing verified by IIT Kharagpur Dean Office.',
-          timestamp: DateTime.now().subtract(const Duration(days: 6)),
+          title: 'Verification',
+          description:
+              'SIMULATED: AISHE / e-District checks. Mismatch routed to manual review.',
+          timestamp: now.subtract(const Duration(days: 20)),
           isCompleted: true,
         ),
         TimelineEvent(
-          title: 'State Welfare Department Verification',
-          description: 'Verification pending at State Welfare Department portal.',
-          timestamp: DateTime.now().add(const Duration(days: 4)),
+          title: 'Sanction',
+          description: 'SIMULATED: MoTA sanction order queued for DBT.',
+          timestamp: now.subtract(const Duration(days: 2)),
+          isCompleted: true,
+        ),
+        TimelineEvent(
+          title: 'Disbursement',
+          description: 'SIMULATED: PFMS credit pending.',
+          timestamp: now.add(const Duration(days: 5)),
           isCompleted: false,
         ),
       ],
     ),
   ];
+}
 
-  ApplicationsRepository(this._firestore);
+class MockApplicationsRepository implements IApplicationsRepository {
+  MockApplicationsRepository();
 
-  @override
-  Future<List<ApplicationModel>> getApplications(String userId) async {
-    try {
-      if (_firestore != null) {
-        final snapshot = await _firestore!
-            .collection('applications')
-            .where('userId', isEqualTo: userId)
-            .get();
+  final _uniqueness = const ScholarshipUniqueness();
+  final List<ApplicationModel> _apps = [];
+  bool _seeded = false;
 
-        if (snapshot.docs.isNotEmpty) {
-          return snapshot.docs
-              .map((doc) => ApplicationModel.fromMap(doc.data(), doc.id))
-              .toList();
-        }
-      }
-    } catch (_) {}
-    return _localApplications;
+  void _seed(String userId) {
+    if (_seeded) return;
+    _apps.addAll(_simulatedApplicationsFor(userId));
+    _seeded = true;
   }
 
   @override
-  Future<ApplicationModel?> getApplicationById(String applicationId) async {
-    try {
-      if (_firestore != null) {
-        final doc = await _firestore!.collection('applications').doc(applicationId).get();
-        if (doc.exists && doc.data() != null) {
-          return ApplicationModel.fromMap(doc.data()!, doc.id);
-        }
-      }
-    } catch (_) {}
-    return _localApplications.firstWhere(
-      (a) => a.id == applicationId,
-      orElse: () => _localApplications.first,
+  Future<List<ApplicationModel>> getApplications(String userId) async {
+    if (userId.isEmpty) {
+      throw const AuthFailure('Sign in to view applications.');
+    }
+    _seed(userId);
+    return List.unmodifiable(
+      _apps.where((app) => app.userId == userId),
     );
   }
 
   @override
+  Future<ApplicationModel> getApplicationById(String applicationId) async {
+    for (final app in _apps) {
+      if (app.id == applicationId) return app;
+    }
+    throw NotFoundFailure('Application "$applicationId" was not found.');
+  }
+
+  @override
   Future<ApplicationModel> submitApplication(ApplicationModel application) async {
-    _localApplications.insert(0, application);
-    try {
-      if (_firestore != null) {
-        await _firestore!
-            .collection('applications')
-            .doc(application.id)
-            .set(application.toMap());
-      }
-    } catch (_) {}
+    if (application.userId.isEmpty) {
+      throw const AuthFailure('Sign in before submitting an application.');
+    }
+    _seed(application.userId);
+    final existing = _apps.where((a) => a.userId == application.userId).toList();
+    final conflict = _uniqueness.conflictIfApplying(
+      existing: existing,
+      userId: application.userId,
+    );
+    if (conflict != null) throw conflict;
+    _apps.insert(0, application);
     return application;
   }
 }
 
+class LiveApplicationsRepository implements IApplicationsRepository {
+  LiveApplicationsRepository(this._firestore);
+
+  final FirebaseFirestore _firestore;
+  final _uniqueness = const ScholarshipUniqueness();
+
+  CollectionReference<Map<String, dynamic>> get _col =>
+      _firestore.collection('applications');
+
+  @override
+  Future<List<ApplicationModel>> getApplications(String userId) async {
+    if (userId.isEmpty) {
+      throw const AuthFailure('Sign in to view applications.');
+    }
+    try {
+      final snapshot = await _col.where('userId', isEqualTo: userId).get();
+      return snapshot.docs
+          .map((doc) => ApplicationModel.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw ErrorMapper.map(e);
+    }
+  }
+
+  @override
+  Future<ApplicationModel> getApplicationById(String applicationId) async {
+    try {
+      final doc = await _col.doc(applicationId).get();
+      if (!doc.exists || doc.data() == null) {
+        throw NotFoundFailure('Application "$applicationId" was not found.');
+      }
+      return ApplicationModel.fromMap(doc.data()!, doc.id);
+    } on Failure {
+      rethrow;
+    } catch (e) {
+      throw ErrorMapper.map(e);
+    }
+  }
+
+  @override
+  Future<ApplicationModel> submitApplication(ApplicationModel application) async {
+    try {
+      final existing = await getApplications(application.userId);
+      final conflict = _uniqueness.conflictIfApplying(
+        existing: existing,
+        userId: application.userId,
+      );
+      if (conflict != null) throw conflict;
+      await _col.doc(application.id).set(application.toMap());
+      return application;
+    } on Failure {
+      rethrow;
+    } catch (e) {
+      throw ErrorMapper.map(e);
+    }
+  }
+}
+
 final applicationsRepositoryProvider = Provider<IApplicationsRepository>((ref) {
-  return ApplicationsRepository(ref.watch(firestoreProvider));
+  if (AppConfig.isDemo) {
+    return MockApplicationsRepository();
+  }
+  return LiveApplicationsRepository(ref.watch(firestoreProvider));
 });
 
 final userApplicationsProvider = FutureProvider<List<ApplicationModel>>((ref) async {
   final user = ref.watch(currentUserProvider);
-  final repo = ref.watch(applicationsRepositoryProvider);
-  return repo.getApplications(user?.id ?? 'demo_user_001');
+  if (user == null) {
+    throw const AuthFailure('Sign in to view applications.');
+  }
+  return ref.watch(applicationsRepositoryProvider).getApplications(user.id);
 });
 
-final applicationDetailProvider = FutureProvider.family<ApplicationModel?, String>((ref, id) async {
-  final repo = ref.watch(applicationsRepositoryProvider);
-  return repo.getApplicationById(id);
+final applicationDetailProvider =
+    FutureProvider.family<ApplicationModel?, String>((ref, id) async {
+  final list = await ref.watch(userApplicationsProvider.future);
+  for (final app in list) {
+    if (app.id == id) return app;
+  }
+  try {
+    return await ref.watch(applicationsRepositoryProvider).getApplicationById(id);
+  } on NotFoundFailure {
+    return null;
+  }
 });

@@ -13,6 +13,7 @@ class AppRoutes {
   static const String documents = '/documents';
   static const String disbursements = '/disbursements';
   static const String eligibility = '/eligibility';
+  static const String coverageGap = '/coverage-gap';
   static const String chatbot = '/chatbot';
   static const String notifications = '/notifications';
   static const String profile = '/profile';

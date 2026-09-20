@@ -14,8 +14,8 @@ class AppConstants {
   static const List<String> sourceSystems = ['nsp', 'sfmp', 'nos_portal'];
   
   static const Map<String, String> sourceSystemDisplayNames = {
-    'nsp': 'National Scholarship Portal',
-    'sfmp': 'Scholarship for Minorities Portal',
+    'nsp': 'National Scholarship Portal (NSP)',
+    'sfmp': 'Scholarship Fund Management Portal (Canara Bank)',
     'nos_portal': 'NOS Portal',
   };
 
