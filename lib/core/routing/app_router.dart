@@ -19,6 +19,8 @@ import '../../features/eligibility/presentation/eligibility_screen.dart';
 import '../../features/chatbot/presentation/chatbot_screen.dart';
 import '../../features/notifications/presentation/notifications_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/verification/presentation/unified_verification_screen.dart';
+import '../../features/coverage_gap/presentation/admin_analytics_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -95,6 +97,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.eligibility,
         builder: (context, state) => const EligibilityScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.verification,
+        builder: (context, state) => const UnifiedVerificationScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.adminAnalytics,
+        builder: (context, state) => const AdminAnalyticsScreen(),
       ),
       GoRoute(
         path: AppRoutes.notifications,

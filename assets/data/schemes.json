@@ -1,0 +1,530 @@
+{
+  "lastUpdated": "2026-03-20",
+  "source": "Ministry of Tribal Affairs",
+  "sourceUrl": "https://tribal.nic.in/ScholarshiP.aspx",
+  "schemes": [
+    {
+      "schemeId": "pre_matric_st",
+      "schemeName": "Pre-Matric Scholarship for ST Students",
+      "shortName": "Pre-Matric ST",
+      "description": "Centrally sponsored scholarship scheme to support education of Scheduled Tribe students studying in Class IX and X to minimize drop-out rates and enhance participation in secondary education.",
+      "targetEducationLevel": "Pre-Matric (Class IX & X)",
+      "targetEducationLevels": ["Pre-Matric", "Class 9", "Class 10"],
+      "whoCanApply": "ST students studying full-time in Classes IX & X in Government or recognized schools.",
+      "eligibilityCriteria": [
+        "Applicant must belong to a recognized Scheduled Tribe (ST) community.",
+        "Must be a regular, full-time student studying in Class IX or Class X in a Government or recognized school.",
+        "Total family annual income from all sources must not exceed ₹2,50,000 (₹2.50 Lakh).",
+        "Scholarship holder under this scheme cannot hold any other scholarship simultaneously.",
+        "Must possess a valid Aadhaar-seeded bank account for Direct Benefit Transfer (DBT)."
+      ],
+      "incomeLimit": {
+        "maxFamilyIncome": 250000.0,
+        "formattedLimit": "₹2,50,000 per annum",
+        "description": "Total family annual income from all sources must not exceed ₹2.50 Lakh.",
+        "relaxationNote": "Applicable across all States/UTs as per official MoTA centrally sponsored scheme guidelines."
+      },
+      "requiredDocuments": [
+        "ST Community (Caste) Certificate issued by competent authority (Tehsildar/SDO)",
+        "Income Certificate for current financial year issued by authorized revenue officer",
+        "Aadhaar Card of the student (linked with mobile & NPCI)",
+        "Previous Class Passing Marksheet / Report Card",
+        "Current Year School Admission / Bonafide Certificate",
+        "Bank Passbook or Cancelled Cheque (Aadhaar Seeded)"
+      ],
+      "applicationPortal": {
+        "portalName": "State Scholarship Portal / MoTA DBT Tribal",
+        "portalUrl": "https://dbttribal.gov.in/",
+        "routingType": "STATE_DBT",
+        "routingInstructions": "State-specific scholarship portal or DBT Tribal portal depending on State/UT nodal configuration."
+      },
+      "verificationStages": [
+        {
+          "order": 1,
+          "stageName": "School / Institute Level Verification",
+          "authority": "Headmaster / Principal / Designated Nodal Teacher",
+          "slaDays": 15,
+          "description": "Verification of admission, attendance, class enrollment, and documents by school head."
+        },
+        {
+          "order": 2,
+          "stageName": "District Welfare / Tribal Officer Verification",
+          "authority": "District Welfare Officer (DWO) / Project Administrator (ITDA)",
+          "slaDays": 20,
+          "description": "Verification of caste authenticity, income ceiling, and institutional endorsement."
+        },
+        {
+          "order": 3,
+          "stageName": "State Tribal Development Department Sanction",
+          "authority": "State Nodal Officer (SNO)",
+          "slaDays": 15,
+          "description": "Consolidation of merit list and release of state matching share."
+        },
+        {
+          "order": 4,
+          "stageName": "PFMS DBT Disbursement",
+          "authority": "Public Financial Management System (PFMS) / MoTA",
+          "slaDays": 10,
+          "description": "Direct bank transfer to student's Aadhaar-seeded bank account."
+        }
+      ],
+      "scholarshipBenefits": {
+        "annualMaxEstimatedAmount": 5250.0,
+        "feeCoverage": "Information not available / requires verification (State specific rules apply for school tuition fees)",
+        "maintenanceAllowance": "Day Scholars: ₹225 per month; Hostellers: ₹525 per month (for 10 months in an academic year).",
+        "otherAllowances": "Special grant for disabled students as per scheme norms.",
+        "frequency": "Per Annum",
+        "fundSharingRatio": "75:25 (Centre:State), 90:10 for North East and Hilly States, 100% for UTs without legislature."
+      },
+      "importantDates": {
+        "academicYear": "2026-2027",
+        "applicationOpenDate": "Information not available / requires verification",
+        "applicationClosingDate": "Information not available / requires verification",
+        "verificationDeadline": "Information not available / requires verification"
+      },
+      "officialGuidelines": {
+        "officialSource": "Source: Ministry of Tribal Affairs",
+        "sourceUrl": "https://tribal.nic.in/ScholarshiP.aspx",
+        "guidelineDocumentName": "Centrally Sponsored Scheme of Pre-Matric Scholarship for ST Students",
+        "lastVerifiedDate": "2026-03-20"
+      },
+      "faq": [
+        {
+          "question": "Who is eligible for Pre-Matric ST Scholarship?",
+          "answer": "ST students studying regular courses in Class 9 or 10 whose family income does not exceed ₹2.50 Lakh per year."
+        },
+        {
+          "question": "What is the maintenance rate for day scholars vs hostellers?",
+          "answer": "Day scholars receive ₹225/month while hostellers receive ₹525/month for 10 months."
+        }
+      ],
+      "grievanceInformation": {
+        "portalUrl": "https://tribal.nic.in/Grievance/",
+        "nodalEmail": "tribal-scholarship@gov.in",
+        "helplineNumber": "0120-6619540",
+        "division": "Scholarship Division, Ministry of Tribal Affairs, Shastri Bhawan, New Delhi"
+      }
+    },
+    {
+      "schemeId": "post_matric_st",
+      "schemeName": "Post-Matric Scholarship for ST Students (PMS-ST)",
+      "shortName": "Post-Matric ST",
+      "description": "Centrally sponsored scholarship scheme to provide financial assistance to Scheduled Tribe students studying at post-matriculation or post-secondary stages up to doctoral levels.",
+      "targetEducationLevel": "Post-Matric (Class XI to Ph.D)",
+      "targetEducationLevels": ["Post-Matric", "Class 11", "Class 12", "ITI", "Diploma", "Graduation", "Post-Graduation", "M.Phil", "Ph.D"],
+      "whoCanApply": "ST students pursuing recognized post-matriculation or post-secondary courses in recognized colleges/universities.",
+      "eligibilityCriteria": [
+        "Applicant must belong to a recognized Scheduled Tribe (ST) community.",
+        "Must have passed Matriculation/Higher Secondary or any higher examination of a recognized Board/University.",
+        "Total family annual income from all sources must not exceed ₹2,50,000 (₹2.50 Lakh).",
+        "Candidates pursuing post-graduate diploma courses in medicine following degree courses are eligible.",
+        "Student must not be receiving any other government scholarship or stipend.",
+        "Must possess a valid Aadhaar-seeded bank account for Direct Benefit Transfer (DBT)."
+      ],
+      "incomeLimit": {
+        "maxFamilyIncome": 250000.0,
+        "formattedLimit": "₹2,50,000 per annum",
+        "description": "Total family annual income from all sources must not exceed ₹2.50 Lakh.",
+        "relaxationNote": "Applicable across all States/UTs as per official MoTA guidelines."
+      },
+      "requiredDocuments": [
+        "ST Community (Caste) Certificate issued by designated authority",
+        "Income Certificate for the current assessment year",
+        "Aadhaar Card (Aadhaar-seeded bank account)",
+        "Class X Pass Certificate / Marksheet & Previous Qualifying Examination Marksheet",
+        "Current College / Institute Admission Fee Receipt & Bonafide Certificate",
+        "Hostel Certificate (for hosteller allowance claim)",
+        "Bank Account Details / Cancelled Cheque"
+      ],
+      "applicationPortal": {
+        "portalName": "National Scholarship Portal (NSP) / State DBT Portal",
+        "portalUrl": "https://scholarships.gov.in",
+        "routingType": "NSP_OR_STATE",
+        "routingInstructions": "Submit via State Scholarship Portal or National Scholarship Portal (NSP) as designated by respective State Government."
+      },
+      "verificationStages": [
+        {
+          "order": 1,
+          "stageName": "Institute Level Verification (INO)",
+          "authority": "Institute Nodal Officer",
+          "slaDays": 15,
+          "description": "Scrutiny of enrolled course, fee structure, and uploaded academic documents."
+        },
+        {
+          "order": 2,
+          "stageName": "District Nodal Officer (DNO) Verification",
+          "authority": "District Tribal Welfare Officer",
+          "slaDays": 15,
+          "description": "Inspection of caste status, family income certificates, and institute credentials."
+        },
+        {
+          "order": 3,
+          "stageName": "State Nodal Officer (SNO) Verification",
+          "authority": "State Tribal Development Department",
+          "slaDays": 15,
+          "description": "State sanction generation, allocation of state share (25% or 10%)."
+        },
+        {
+          "order": 4,
+          "stageName": "PFMS Central DBT Disbursement",
+          "authority": "Public Financial Management System / MoTA",
+          "slaDays": 10,
+          "description": "Electronic fund transfer directly into Aadhaar-seeded bank account."
+        }
+      ],
+      "scholarshipBenefits": {
+        "annualMaxEstimatedAmount": 13500.0,
+        "feeCoverage": "Compulsory non-refundable fees (tuition, library, exam, sports fees) charged by the institution as per approved state fee slabs.",
+        "maintenanceAllowance": "Group 1: ₹1,200/month (hosteller), ₹550/month (day scholar); Group 2: ₹820/month (hosteller), ₹530/month (day scholar); Group 3: ₹570/month (hosteller), ₹300/month (day scholar); Group 4: ₹380/month (hosteller), ₹230/month (day scholar).",
+        "otherAllowances": "Study tour charges, thesis typing/printing charges for research scholars, and book grant for correspondence courses.",
+        "frequency": "Per Annum",
+        "fundSharingRatio": "75:25 (Centre:State), 90:10 for North-East & Himalayan States, 100% for UTs without legislature."
+      },
+      "importantDates": {
+        "academicYear": "2026-2027",
+        "applicationOpenDate": "Information not available / requires verification",
+        "applicationClosingDate": "Information not available / requires verification",
+        "verificationDeadline": "Information not available / requires verification"
+      },
+      "officialGuidelines": {
+        "officialSource": "Source: Ministry of Tribal Affairs",
+        "sourceUrl": "https://tribal.nic.in/ScholarshiP.aspx",
+        "guidelineDocumentName": "Centrally Sponsored Scheme of Post-Matric Scholarship for ST Students",
+        "lastVerifiedDate": "2026-03-20"
+      },
+      "faq": [
+        {
+          "question": "Can degree or engineering students apply for Post-Matric ST Scholarship?",
+          "answer": "Yes, ST students pursuing graduation, post-graduation, professional, medical, engineering, or polytechnic courses are covered."
+        },
+        {
+          "question": "What happens if family income exceeds ₹2.5 Lakhs?",
+          "answer": "Students whose family income exceeds ₹2.50 Lakh are not eligible under Post-Matric ST, but may check Top Class Scholarship if attending notified premier institutes."
+        }
+      ],
+      "grievanceInformation": {
+        "portalUrl": "https://tribal.nic.in/Grievance/",
+        "nodalEmail": "tribal-scholarship@gov.in",
+        "helplineNumber": "0120-6619540",
+        "division": "Scholarship Division, Ministry of Tribal Affairs, New Delhi"
+      }
+    },
+    {
+      "schemeId": "top_class_st",
+      "schemeName": "National Scholarship / Top Class Scholarship for Higher Education of ST Students",
+      "shortName": "Top Class ST",
+      "description": "Central Sector scholarship scheme aimed at encouraging meritorious ST students to pursue studies in premier higher education institutions across India notified by the Ministry of Tribal Affairs.",
+      "targetEducationLevel": "Higher Education (Notified Premier Institutes)",
+      "targetEducationLevels": ["Higher Education", "Degree", "Undergraduate", "Postgraduate", "B.Tech", "MBBS", "MBA", "LL.B"],
+      "whoCanApply": "ST students who have secured admission into one of the 265 MoTA-notified premier institutions (such as IITs, NITs, IIMs, AIIMS, NLUs, etc.).",
+      "eligibilityCriteria": [
+        "Applicant must belong to a recognized Scheduled Tribe (ST) community.",
+        "Must have secured admission in any of the 265 premier institutions notified by the Ministry of Tribal Affairs.",
+        "Total family annual income from all sources must not exceed ₹6,00,000 (₹6.00 Lakh).",
+        "Scholarship is awarded based on institutional admission merit within allotted institute slot caps.",
+        "The scholarship once awarded will continue till the completion of the course subject to satisfactory performance.",
+        "Must have an active Aadhaar-seeded bank account for DBT payment."
+      ],
+      "incomeLimit": {
+        "maxFamilyIncome": 600000.0,
+        "formattedLimit": "₹6,00,000 per annum",
+        "description": "Total family annual income from all sources must not exceed ₹6.00 Lakh.",
+        "relaxationNote": "Applicable across all 265 notified premier institutions nationwide."
+      },
+      "requiredDocuments": [
+        "ST Community Certificate issued by competent revenue authority",
+        "Income Certificate / ITR for current financial year showing income up to ₹6.00 Lakh",
+        "Aadhaar Card (linked to bank account for DBT)",
+        "Proof of Admission in Notified Premier Institute (Offer Letter / Seat Allotment / Bonafide)",
+        "Tuition Fee Structure endorsed by Registrar / Dean",
+        "Class XII / Qualifying Degree Marksheet",
+        "Hostel Accommodation Certificate",
+        "Bank Passbook or Cancelled Cheque with IFSC"
+      ],
+      "applicationPortal": {
+        "portalName": "National Scholarship Portal (NSP)",
+        "portalUrl": "https://scholarships.gov.in",
+        "routingType": "NSP",
+        "routingInstructions": "Apply online through the National Scholarship Portal (scholarships.gov.in) under the Ministry of Tribal Affairs central sector schemes tab."
+      },
+      "verificationStages": [
+        {
+          "order": 1,
+          "stageName": "Premier Institute Nodal Verification (L1)",
+          "authority": "Institute Nodal Officer (IIT / NIT / IIM / AIIMS / NLU)",
+          "slaDays": 15,
+          "description": "Validation of admission rank, seat allotment, fee receipt, and student credentials."
+        },
+        {
+          "order": 2,
+          "stageName": "Ministry of Tribal Affairs Central Verification (L2)",
+          "authority": "MoTA Central Project Section",
+          "slaDays": 20,
+          "description": "Central quota verification against institute slots, income authenticity check, and merit confirmation."
+        },
+        {
+          "order": 3,
+          "stageName": "Sanction & DBT Order Generation",
+          "authority": "MoTA Finance Division",
+          "slaDays": 10,
+          "description": "Preparation of digitally signed sanction orders."
+        },
+        {
+          "order": 4,
+          "stageName": "Direct PFMS Transfer to Student / Institute",
+          "authority": "Public Financial Management System",
+          "slaDays": 7,
+          "description": "Tuition fees directly paid to institute; living and allowances credited to student's bank account."
+        }
+      ],
+      "scholarshipBenefits": {
+        "annualMaxEstimatedAmount": 286000.0,
+        "feeCoverage": "Full tuition fees and non-refundable charges paid directly to the institute (up to ₹2.50 Lakh per annum in private institutes; full actual fee in government institutes).",
+        "maintenanceAllowance": "Living expenses @ ₹3,000 per month (₹36,000 per annum).",
+        "otherAllowances": "Books and stationery charges @ ₹5,000 per annum + One-time computer/accessories grant up to ₹45,000.",
+        "frequency": "Per Annum",
+        "fundSharingRatio": "100% funded by Central Government (Ministry of Tribal Affairs)."
+      },
+      "importantDates": {
+        "academicYear": "2026-2027",
+        "applicationOpenDate": "Information not available / requires verification",
+        "applicationClosingDate": "Information not available / requires verification",
+        "verificationDeadline": "Information not available / requires verification"
+      },
+      "officialGuidelines": {
+        "officialSource": "Source: Ministry of Tribal Affairs",
+        "sourceUrl": "https://tribal.nic.in/ScholarshiP.aspx",
+        "guidelineDocumentName": "Central Sector Scholarship Scheme of Top Class Education for ST Students",
+        "lastVerifiedDate": "2026-03-20"
+      },
+      "faq": [
+        {
+          "question": "Which colleges are covered under Top Class ST Scholarship?",
+          "answer": "265 premier institutions including all IITs, NITs, IIMs, IISc, AIIMS, National Law Universities (NLUs), and premier central universities."
+        },
+        {
+          "question": "What is the income ceiling for Top Class Scholarship?",
+          "answer": "The annual family income ceiling is ₹6.00 Lakhs."
+        }
+      ],
+      "grievanceInformation": {
+        "portalUrl": "https://tribal.nic.in/Grievance/",
+        "nodalEmail": "topclass-tribal@nic.in",
+        "helplineNumber": "0120-6619540",
+        "division": "Top Class Scholarship Cell, Ministry of Tribal Affairs, New Delhi"
+      }
+    },
+    {
+      "schemeId": "nfst",
+      "schemeName": "National Fellowship for ST Students (NFST)",
+      "shortName": "National Fellowship (NFST)",
+      "description": "Central Sector fellowship scheme providing financial support to meritorious Scheduled Tribe candidates to pursue regular and full-time M.Phil and Ph.D degrees in Indian Universities and Research Institutions.",
+      "targetEducationLevel": "Research (M.Phil & Ph.D)",
+      "targetEducationLevels": ["Research", "M.Phil", "Ph.D", "Doctorate"],
+      "whoCanApply": "ST candidates who have registered / secured admission in regular full-time M.Phil / Ph.D courses in UGC-recognized universities or institutes of national importance.",
+      "eligibilityCriteria": [
+        "Applicant must belong to a recognized Scheduled Tribe (ST) community.",
+        "Candidate must have completed Post-Graduation examination with minimum qualifying marks.",
+        "Must have registered for regular full-time M.Phil or Ph.D in a UGC-recognized University / Deemed University / National Institute.",
+        "Total family annual income must not exceed ₹6,00,000 (₹6.00 Lakh).",
+        "Slots cap: 750 fresh fellowships awarded each year based on Post-Graduation merit.",
+        "Special preference / reservation for female candidates, Divyangjan (PwD), and Particularly Vulnerable Tribal Groups (PVTG).",
+        "Applicant must not be employed or availing any other fellowship (e.g. UGC-JRF, CSIR-JRF, ICAR)."
+      ],
+      "incomeLimit": {
+        "maxFamilyIncome": 600000.0,
+        "formattedLimit": "₹6,00,000 per annum",
+        "description": "Total family annual income from all sources must not exceed ₹6.00 Lakh.",
+        "relaxationNote": "Applicable for all 750 annual fellowship slots across India."
+      },
+      "requiredDocuments": [
+        "ST Community Certificate issued by competent revenue authority",
+        "Income Certificate of the family for the relevant assessment year",
+        "Aadhaar Card (linked to DBT bank account)",
+        "Post-Graduation Degree and Consolidated Marksheet",
+        "M.Phil / Ph.D Registration / Admission Letter from University",
+        "Research Supervisor / Guide Allotment Certificate",
+        "University Joining Report in prescribed format",
+        "PVTG or PwD Certificate (if claiming priority quota)"
+      ],
+      "applicationPortal": {
+        "portalName": "MoTA Fellowship Portal",
+        "portalUrl": "https://fellowship.tribal.gov.in/",
+        "routingType": "FELLOWSHIP_PORTAL",
+        "routingInstructions": "Apply online through the dedicated Ministry of Tribal Affairs Fellowship portal (fellowship.tribal.gov.in)."
+      },
+      "verificationStages": [
+        {
+          "order": 1,
+          "stageName": "University Research Section / Dean Verification",
+          "authority": "Registrar / Dean of Academic Research",
+          "slaDays": 15,
+          "description": "Verification of full-time PhD registration status, admission date, and non-receipt of other fellowships."
+        },
+        {
+          "order": 2,
+          "stageName": "MoTA NFST Scrutiny Committee",
+          "authority": "Ministry of Tribal Affairs Fellowship Committee",
+          "slaDays": 30,
+          "description": "Merit list generation across subjects based on Post-Graduation percentages, PVTG/Divyang quota allocation."
+        },
+        {
+          "order": 3,
+          "stageName": "Award Letter Issuance",
+          "authority": "MoTA Division Head",
+          "slaDays": 10,
+          "description": "Official sanction letter generated with unique NFST Scholar ID."
+        },
+        {
+          "order": 4,
+          "stageName": "Monthly DBT Fellowship Transfer",
+          "authority": "Canara Bank Portal / PFMS DBT",
+          "slaDays": 7,
+          "description": "Monthly fellowship stipend credited to Aadhaar-linked account on university quarterly attendance confirmation."
+        }
+      ],
+      "scholarshipBenefits": {
+        "annualMaxEstimatedAmount": 416000.0,
+        "feeCoverage": "Information not available / requires verification (Tuition and laboratory charges governed by host institution norms)",
+        "maintenanceAllowance": "JRF equivalent: ₹31,000 per month (first 2 years); SRF equivalent: ₹35,000 per month (remaining tenure) as per revised national research fellowship standards.",
+        "otherAllowances": "Contingency grant: ₹10,000 to ₹20,500/year for Humanities/Social Sciences; ₹12,000 to ₹25,000/year for Science/Engineering; plus admissible House Rent Allowance (HRA) as per city classification.",
+        "frequency": "Monthly Stipend",
+        "fundSharingRatio": "100% funded by Central Government (Ministry of Tribal Affairs)."
+      },
+      "importantDates": {
+        "academicYear": "2026-2027",
+        "applicationOpenDate": "Information not available / requires verification",
+        "applicationClosingDate": "Information not available / requires verification",
+        "verificationDeadline": "Information not available / requires verification"
+      },
+      "officialGuidelines": {
+        "officialSource": "Source: Ministry of Tribal Affairs",
+        "sourceUrl": "https://tribal.nic.in/ScholarshiP.aspx",
+        "guidelineDocumentName": "Scheme of National Fellowship for ST Students",
+        "lastVerifiedDate": "2026-03-20"
+      },
+      "faq": [
+        {
+          "question": "How many scholarships are available under NFST?",
+          "answer": "750 fresh fellowships are awarded every financial year on Post-Graduation merit basis."
+        },
+        {
+          "question": "Can I apply for NFST if I am working or in distance education?",
+          "answer": "No, NFST is strictly for regular and full-time M.Phil/Ph.D scholars."
+        }
+      ],
+      "grievanceInformation": {
+        "portalUrl": "https://tribal.nic.in/Grievance/",
+        "nodalEmail": "fellowship-tribal@nic.in",
+        "helplineNumber": "011-23386128",
+        "division": "Fellowship Unit, Ministry of Tribal Affairs, Shastri Bhawan, New Delhi"
+      }
+    },
+    {
+      "schemeId": "nos",
+      "schemeName": "National Overseas Scholarship for ST Students (NOS)",
+      "shortName": "National Overseas (NOS)",
+      "description": "Central Sector scholarship scheme providing financial assistance to selected ST candidates for pursuing Master level courses, Ph.D and Post-Doctoral research programmes abroad in accredited foreign universities.",
+      "targetEducationLevel": "Overseas Studies (Master's & Ph.D Abroad)",
+      "targetEducationLevels": ["Overseas", "Master's Abroad", "Ph.D Abroad", "Post-Doctoral"],
+      "whoCanApply": "ST students who have gained unconditional admission into top 500 QS World University Ranked foreign institutions for Master's or Ph.D.",
+      "eligibilityCriteria": [
+        "Applicant must belong to a recognized Scheduled Tribe (ST) community.",
+        "Must have secured unconditional admission in a foreign university ranked in the top 500 QS World University Rankings.",
+        "Must have scored at least 55% marks or equivalent grade in qualifying Master's/Bachelor's degree.",
+        "Total family annual income from all sources must not exceed ₹6,00,000 (₹6.00 Lakh).",
+        "Age Limit: Candidate must be below 35 years of age as on the 1st of July of the application year.",
+        "Maximum 2 children of the same parents can be considered under the scheme.",
+        "Slot quota: 20 slots annually (17 general STs + 3 reserved specifically for Particularly Vulnerable Tribal Groups - PVTGs)."
+      ],
+      "incomeLimit": {
+        "maxFamilyIncome": 600000.0,
+        "formattedLimit": "₹6,00,000 per annum",
+        "description": "Total family annual income from all sources must not exceed ₹6.00 Lakh.",
+        "relaxationNote": "Strict ceiling: No student whose family income exceeds ₹6.00 Lakh is eligible."
+      },
+      "requiredDocuments": [
+        "ST Community Certificate issued by designated State authority",
+        "Income Certificate / ITR of parents and applicant for current assessment year",
+        "Aadhaar Card and Valid Indian Passport (Mandatory)",
+        "Unconditional Offer / Admission Letter from Top 500 QS Ranked foreign university",
+        "Qualifying Degree Marksheet & Certificate with minimum 55% score",
+        "GRE / GMAT / IELTS / TOEFL scorecard (as mandated by university)",
+        "PVTG certificate issued by District Magistrate (if applying under 3 PVTG slots)",
+        "Two Academic Recommendation Letters from professors"
+      ],
+      "applicationPortal": {
+        "portalName": "MoTA Overseas Scholarship Portal",
+        "portalUrl": "https://overseas.tribal.gov.in/",
+        "routingType": "OVERSEAS_PORTAL",
+        "routingInstructions": "Apply online through the designated Ministry of Tribal Affairs Overseas Portal (overseas.tribal.gov.in)."
+      },
+      "verificationStages": [
+        {
+          "order": 1,
+          "stageName": "Online Document & Passport Scrutiny",
+          "authority": "MoTA Overseas Cell Scrutiny Unit",
+          "slaDays": 20,
+          "description": "Verification of QS University rank, offer letter authenticity, passport validity, and academic marks."
+        },
+        {
+          "order": 2,
+          "stageName": "Selection Committee Evaluation",
+          "authority": "Inter-Ministerial Selection Committee chaired by MoTA Secretary",
+          "slaDays": 30,
+          "description": "Assessment of research proposal, candidate ranking, and slot allocation across fields."
+        },
+        {
+          "order": 3,
+          "stageName": "Provisional Award Letter & Visa Assistance",
+          "authority": "Ministry of Tribal Affairs",
+          "slaDays": 10,
+          "description": "Issuance of formal guarantee letter for student visa processing."
+        },
+        {
+          "order": 4,
+          "stageName": "Indian Embassy / High Commission Disbursement",
+          "authority": "Indian Mission Abroad / MoTA Direct Transfer",
+          "slaDays": 15,
+          "description": "Tuition fees paid to foreign university directly; living and contingency paid in foreign currency via Indian Mission."
+        }
+      ],
+      "scholarshipBenefits": {
+        "annualMaxEstimatedAmount": 2800000.0,
+        "feeCoverage": "Full tuition fees and mandatory institutional charges paid directly to the foreign university.",
+        "maintenanceAllowance": "Annual Maintenance Allowance of USD 15,400 (for USA and other countries) or GBP 9,900 (for United Kingdom).",
+        "otherAllowances": "Contingency allowance (USD 1,532 / GBP 1,116 per year) + Actual cost of Economy class air passage + Visa fees + Medical Insurance coverage.",
+        "frequency": "Per Annum (USD / GBP)",
+        "fundSharingRatio": "100% funded by Central Government (Ministry of Tribal Affairs)."
+      },
+      "importantDates": {
+        "academicYear": "2026-2027",
+        "applicationOpenDate": "Information not available / requires verification",
+        "applicationClosingDate": "Information not available / requires verification",
+        "verificationDeadline": "Information not available / requires verification"
+      },
+      "officialGuidelines": {
+        "officialSource": "Source: Ministry of Tribal Affairs",
+        "sourceUrl": "https://tribal.nic.in/ScholarshiP.aspx",
+        "guidelineDocumentName": "Scheme of National Overseas Scholarship for ST Candidates",
+        "lastVerifiedDate": "2026-03-20"
+      },
+      "faq": [
+        {
+          "question": "How many slots are reserved for PVTG candidates under NOS?",
+          "answer": "Out of 20 annual slots, 3 slots are specifically reserved for Particularly Vulnerable Tribal Groups (PVTGs)."
+        },
+        {
+          "question": "Are private colleges abroad eligible under NOS?",
+          "answer": "Only institutions featured in the top 500 QS World University Rankings are eligible."
+        }
+      ],
+      "grievanceInformation": {
+        "portalUrl": "https://tribal.nic.in/Grievance/",
+        "nodalEmail": "overseas-tribal@nic.in",
+        "helplineNumber": "011-23386128",
+        "division": "Overseas Scholarship Division, Ministry of Tribal Affairs, New Delhi"
+      }
+    }
+  ]
+}

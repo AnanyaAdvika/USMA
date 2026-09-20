@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/loading_indicator.dart';
+import '../../auth/data/auth_repository.dart';
 import '../data/notifications_repository.dart';
 
 class NotificationsScreen extends ConsumerWidget {
@@ -10,6 +11,7 @@ class NotificationsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifsAsync = ref.watch(userNotificationsProvider);
+    final user = ref.watch(currentUserProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,10 +30,10 @@ class NotificationsScreen extends ConsumerWidget {
             itemBuilder: (context, idx) {
               final item = notifs[idx];
               return Card(
-                color: item.isRead ? AppColors.surface : AppColors.infoBg.withOpacity(0.3),
+                color: item.isRead ? AppColors.surface : AppColors.infoBg.withValues(alpha: 0.3),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: AppColors.primary.withOpacity(0.1),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                     child: const Icon(Icons.notifications_active, color: AppColors.primary),
                   ),
                   title: Text(item.title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
@@ -48,7 +50,8 @@ class NotificationsScreen extends ConsumerWidget {
                     ],
                   ),
                   onTap: () {
-                    ref.read(notificationsRepositoryProvider).markAsRead(item.id);
+                    final uid = user?.id ?? 'demo_user_001';
+                    ref.read(notificationsRepositoryProvider).markAsRead(uid, item.id);
                     ref.invalidate(userNotificationsProvider);
                   },
                 ),

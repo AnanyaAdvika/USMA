@@ -1,15 +1,79 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // Function to check if user has admin/officer role claims
+    function isOfficerOrAdmin() {
+      return request.auth != null && (
+        request.auth.token.role == 'admin' ||
+        request.auth.token.role == 'ministry_officer' ||
+        request.auth.token.role == 'state_officer' ||
+        request.auth.token.role == 'institution_verifier'
+      );
+    }
+
+    // User Profile: Only the student or officer can read; student can update own details
     match /users/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      allow read: if request.auth != null && (request.auth.uid == uid || isOfficerOrAdmin());
+      allow write: if request.auth != null && request.auth.uid == uid;
+      
       match /{subcollection}/{docId} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
+        allow read: if request.auth != null && (request.auth.uid == uid || isOfficerOrAdmin());
+        allow write: if request.auth != null && request.auth.uid == uid;
       }
     }
+
+    // Scholarship Applications: Owned by student; verifiers can read and update verification status
+    match /applications/{applicationId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || isOfficerOrAdmin()
+      );
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update: if request.auth != null && (
+        resource.data.userId == request.auth.uid || isOfficerOrAdmin()
+      );
+      allow delete: if false; // Government applications must preserve audit trail
+    }
+
+    // Document Vault: Sensitive government proofs (Caste, Income, Marksheet)
+    match /documents/{documentId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || isOfficerOrAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || resource.data.userId == request.auth.uid
+      );
+    }
+
+    // DBT Disbursements: Read-only for student; writable only by backend / PFMS webhook service
+    match /disbursements/{disbursementId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || isOfficerOrAdmin()
+      );
+      allow write: if isOfficerOrAdmin();
+    }
+
+    // Deficiencies: Action items raised by verification officers
+    match /deficiencies/{deficiencyId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || isOfficerOrAdmin()
+      );
+      allow write: if request.auth != null && (
+        resource.data.userId == request.auth.uid || isOfficerOrAdmin()
+      );
+    }
+
+    // Official Scheme Catalog: Publicly readable for authenticated users; write-protected
     match /schemes/{schemeId} {
       allow read: if request.auth != null;
-      allow write: if false;
+      allow write: if request.auth != null && request.auth.token.role == 'admin';
+    }
+
+    // Notifications: User-scoped
+    match /notifications/{notificationId} {
+      allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if isOfficerOrAdmin();
+      allow delete: if false;
     }
   }
 }

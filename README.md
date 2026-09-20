@@ -46,35 +46,55 @@ Currently, Scheduled Tribe (ST) students face steep hurdles navigating disparate
 
 ---
 
+## ✨ Official MoTA Scholarship Schemes Coverage
+
+USMA implements accurate data modeling, statutory rule verification, and portal routing for all five scholarship schemes administered by the **Ministry of Tribal Affairs (MoTA), Government of India** ([tribal.nic.in/ScholarshiP.aspx](https://tribal.nic.in/ScholarshiP.aspx)):
+
+| # | Official Scheme Name | Target Level | Income Ceiling | Key Benefits | Application Route |
+|---|----------------------|--------------|----------------|--------------|-------------------|
+| 1 | **Pre-Matric Scholarship for ST Students** | Class IX & X | ₹2,50,000 / yr | Monthly maintenance (₹225 Day / ₹525 Hosteller) | State Portal / MoTA DBT Tribal |
+| 2 | **Post-Matric Scholarship for ST Students (PMS-ST)** | Class XI to Ph.D | ₹2,50,000 / yr | Compulsory course fees + Monthly allowance (₹230 to ₹1,200) | NSP / State DBT Portal |
+| 3 | **National Scholarship / Top Class Education for ST Students** | 265 Notified Premier Institutes (IIT/NIT/IIM/AIIMS/NLU) | ₹6,00,000 / yr | Full tuition fee + ₹3,000/mo living + ₹5,000 books + ₹45,000 computer grant | National Scholarship Portal (NSP) |
+| 4 | **National Fellowship for ST Students (NFST)** | Regular M.Phil & Ph.D | ₹6,00,000 / yr | 750 slots/yr; Monthly fellowship (₹31k JRF / ₹35k SRF) + HRA + Contingency | MoTA Fellowship Portal |
+| 5 | **National Overseas Scholarship for ST Students (NOS)** | Master's, Ph.D & Post-Doc Abroad (Top 500 QS) | ₹6,00,000 / yr | 20 slots/yr (17 ST + 3 PVTG); Full foreign tuition + USD 15,400/yr + Airfare | MoTA Overseas Portal |
+
+---
+
 ## ✨ Key Modules & Technical Features
 
-### 1. 📊 Consolidated Dashboard (`features/dashboard`)
+### 1. 🔍 MoTA Scholarship Explorer (`features/applications`)
+- Single-window discovery platform for all 5 statutory MoTA scholarship schemes.
+- Visual cards displaying target criteria, income ceilings, main financial benefits, application route, and instant personal eligibility evaluation.
+- Official Ministry attribution indicators (`Source: Ministry of Tribal Affairs`).
+- Unverified items explicitly marked as `"Information not available / requires verification"`.
+
+### 2. 🎯 Dynamic Scheme-Specific Eligibility Engine (`features/eligibility`)
+- Replaces generic filtering with real-world statutory rule validation evaluating:
+  - **Community Eligibility:** Valid ST / PVTG tribal category requirement.
+  - **Income Ceilings:** Validates ₹2.50L ceiling (Pre/Post-Matric) vs ₹6.00L ceiling (Top Class, NFST, NOS).
+  - **Educational & Institutional Fit:** Differentiates school, college, 265 notified premier institutions, M.Phil/Ph.D research, and top 500 QS foreign universities.
+  - **Document Completeness:** Checks for Caste Certificate, Income Certificate, Aadhaar seeding, and Valid Passport.
+- Provides actionable diagnostic results (`Eligible`, `Conditionally Eligible`, `Ineligible`, `Incomplete Profile`).
+
+### 3. 📊 Consolidated Dashboard (`features/dashboard`)
 - Unified interface displaying ongoing scholarship cycles, key deadlines, active application statuses, and urgent notices.
 - Personalized scholarship recommendations based on student profile attributes.
 
-### 2. 🎯 Dynamic Eligibility Checker (`features/eligibility`)
-- Multi-parameter rule evaluation engine matching applicants against national and state ST schemes.
-- Instant pre-check preventing invalid submissions and reducing rejection overhead for verification officers.
-
-### 3. 📝 Applications & Lifecycle Tracking (`features/applications`)
+### 4. 📝 Applications & Lifecycle Tracking (`features/applications`)
 - Intuitive step-by-step application submission workflow.
 - Granular tracking with timeline milestones: `Draft` ➔ `Submitted` ➔ `Institute Verified` ➔ `State Approved` ➔ `Sanctioned` ➔ `Disbursed`.
 
-### 4. 💳 DBT & Disbursement Monitoring (`features/disbursements`)
+### 5. 💳 DBT & Disbursement Monitoring (`features/disbursements`)
 - Transparent tracking of financial disbursements, transaction IDs, payment batch numbers, and PFMS reconciliation.
-- Notification dispatch on milestone transitions via Firebase Cloud Messaging (FCM).
+- Direct Aadhaar-seeded bank account status validation.
 
-### 5. 🤖 Support Chatbot & Helpdesk (`features/chatbot`)
+### 6. 🤖 Support Chatbot & Helpdesk (`features/chatbot`)
 - Integrated automated chatbot for instantaneous assistance regarding criteria, guidelines, and document prerequisites.
 - Offline-ready FAQ knowledge base stored natively (`assets/faq/faq.json`).
 
-### 6. 📁 Secure Document Management (`features/documents`)
-- In-app camera and file picker integration (`file_picker`, `image_picker`) supporting certificates, marks sheets, and bank passbooks.
+### 7. 📁 Secure Document Management (`features/documents`)
+- DigiLocker integration and digital vault for paperless verification.
 - Encrypted storage uploads via Firebase Storage with file integrity validation.
-
-### 7. 🔒 Secure Authentication & Role Management (`features/auth`)
-- Robust auth workflows supporting email/password and mobile OTP verification via Firebase Auth.
-- Session persistence and role-based access control.
 
 ---
 

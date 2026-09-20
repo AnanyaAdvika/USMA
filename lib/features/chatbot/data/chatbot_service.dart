@@ -60,20 +60,95 @@ class MockJagoChatbot implements JagoChatbot {
     final faq = await _loadFaq();
     final lower = query.toLowerCase();
 
-    final milestone = _milestoneAlert(context);
-    if (lower.contains('status') ||
-        lower.contains('milestone') ||
-        lower.contains('स्थिति') ||
-        lower.contains('alert')) {
+    // 1. Contextual Student Questions
+    if (lower.contains('eligible') && (lower.contains('post-matric') || lower.contains('post matric') || lower.contains('am i'))) {
       return ChatMessageModel.bot(
-        '${AppConfig.simulatedLabel} JAGO\n$milestone',
+        'Based on your profile, you are eligible for Post-Matric Scholarship for ST Students (PMS-ST). Your family annual income is within the ₹2,50,000 ceiling and you are enrolled in a recognized Post-Matric course.\n\nSource: Ministry of Tribal Affairs (tribal.nic.in)',
         suggestions: const [
-          'What documents do I need?',
-          'Can I hold two scholarships?',
+          'What documents are missing?',
+          'How much money was disbursed?',
+          'Application status',
         ],
       );
     }
 
+    if (lower.contains('document') && (lower.contains('missing') || lower.contains('need') || lower.contains('require'))) {
+      if (context.pendingActions.isNotEmpty) {
+        return ChatMessageModel.bot(
+          'Action Required on your profile:\n• ${context.pendingActions.join('\n• ')}\n\nPlease visit the DigiLocker Document Vault to resolve these items before the deadline.\n\nSource: Ministry of Tribal Affairs',
+          suggestions: const [
+            'How do I upload to DigiLocker?',
+            'Application status',
+            'When was my scholarship sanctioned?',
+          ],
+        );
+      } else {
+        return ChatMessageModel.bot(
+          'All your core documents (Aadhaar, ST Certificate, Income Certificate, Marksheet) are verified with zero pending deficiencies!\n\nSource: Ministry of Tribal Affairs',
+          suggestions: const [
+            'When was my scholarship sanctioned?',
+            'How much money was disbursed?',
+          ],
+        );
+      }
+    }
+
+    if (lower.contains('sanction') || lower.contains('when') && lower.contains('sanctioned')) {
+      return ChatMessageModel.bot(
+        'Your scholarship application (${context.activeSchemeTitle ?? "Post-Matric ST"}) was officially sanctioned on 18th March 2026 for ₹85,000 under MoTA Sanction Order #MOTA/2026/ST-8821.\n\nSource: Ministry of Tribal Affairs (tribal.nic.in)',
+        suggestions: const [
+          'How much money was disbursed?',
+          'Why is my application pending?',
+        ],
+      );
+    }
+
+    if (lower.contains('disburs') || lower.contains('money') || lower.contains('paid') || lower.contains('how much')) {
+      return ChatMessageModel.bot(
+        'Direct Benefit Transfer (DBT) Status:\n• Installment 1: ₹42,500 successfully credited (UTR: SIM-SBIN002938192026).\n• Installment 2: ₹42,500 processing queued on PFMS.\n\nSource: Ministry of Tribal Affairs (PFMS DBT)',
+        suggestions: const [
+          'What should I do about my income certificate?',
+          'Application status',
+        ],
+      );
+    }
+
+    if (lower.contains('income certificate') || lower.contains('certificate')) {
+      return ChatMessageModel.bot(
+        'Your Annual Income Certificate has a name abbreviation variance ("Sunita M." vs "Sunita Marandi"). It has been routed for manual officer review and does not block your payment.\n\nSource: Ministry of Tribal Affairs',
+        suggestions: const [
+          'Application status',
+          'Which scholarship applies to my current education level?',
+        ],
+      );
+    }
+
+    if (lower.contains('which scholarship') || lower.contains('education level')) {
+      return ChatMessageModel.bot(
+        'For your current education level (College / Higher Education), the following MoTA schemes apply:\n1. Post-Matric Scholarship for ST Students (PMS-ST)\n2. Top Class Scholarship (if in one of 265 notified premier institutes like IIT/NIT)\n\nSource: Ministry of Tribal Affairs',
+        suggestions: const [
+          'Am I eligible for Post-Matric scholarship?',
+          'What documents are missing?',
+        ],
+      );
+    }
+
+    final milestone = _milestoneAlert(context);
+    if (lower.contains('status') ||
+        lower.contains('milestone') ||
+        lower.contains('स्थिति') ||
+        lower.contains('pending') ||
+        lower.contains('why is my application pending')) {
+      return ChatMessageModel.bot(
+        '${AppConfig.simulatedLabel} JAGO Status Update:\n$milestone\n\nYour application is in the Sanctioned stage and awaiting final PFMS DBT clearance.\n\nSource: Ministry of Tribal Affairs',
+        suggestions: const [
+          'What documents are missing?',
+          'How much money was disbursed?',
+        ],
+      );
+    }
+
+    // 2. FAQ Keyword search
     FaqEntry? best;
     var bestScore = 0;
     for (final entry in faq) {
@@ -90,27 +165,20 @@ class MockJagoChatbot implements JagoChatbot {
       }
     }
 
-    final preface = [
-      '${AppConfig.simulatedLabel} JAGO for ${context.studentName}',
-      if (context.activeSchemeTitle != null)
-        'Active scheme: ${context.activeSchemeTitle} (${context.applicationStatus ?? 'n/a'}).',
-      if (context.pendingActions.isNotEmpty)
-        'Pending: ${context.pendingActions.join('; ')}',
-    ].join('\n');
-
     if (best == null || bestScore == 0) {
       return ChatMessageModel.bot(
-        '$preface\nI do not have a matching FAQ. Ask about schemes, documents, DBT, or deficiency.',
+        "I don't have verified information for this question. Please check the official Ministry of Tribal Affairs source (https://tribal.nic.in/ScholarshiP.aspx) or contact the helpline at 0120-6619540.",
         suggestions: const [
-          'Which scholarships can I apply for?',
-          'What documents are required?',
-          'Application status',
+          'Am I eligible for Post-Matric scholarship?',
+          'What documents are missing?',
+          'When was my scholarship sanctioned?',
+          'How much money was disbursed?',
         ],
       );
     }
 
     return ChatMessageModel.bot(
-      '$preface\n\n${best.answer}',
+      '${best.answer}\n\nSource: Ministry of Tribal Affairs (tribal.nic.in)',
       suggestions: const [
         'Application status',
         'Can I hold two scholarships?',
@@ -124,8 +192,8 @@ class MockJagoChatbot implements JagoChatbot {
         ? 'No open deficiencies.'
         : 'Pending actions: ${context.pendingActions.join('; ')}';
     return 'Hello ${context.studentName}. '
-        'Scheme: ${context.activeSchemeTitle ?? 'none'}. '
-        'Stage: ${context.applicationStatus ?? 'none'}. $pending';
+        'Scheme: ${context.activeSchemeTitle ?? 'Post-Matric ST'}. '
+        'Stage: ${context.applicationStatus ?? 'Sanctioned'}. $pending';
   }
 }
 

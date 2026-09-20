@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/loading_indicator.dart';
 import '../../../core/widgets/status_badge.dart';
+import '../../auth/data/auth_repository.dart';
 import '../data/documents_repository.dart';
 
 class DocumentsScreen extends ConsumerWidget {
@@ -11,6 +12,7 @@ class DocumentsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final docsAsync = ref.watch(userDocumentsProvider);
+    final user = ref.watch(currentUserProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,7 +22,8 @@ class DocumentsScreen extends ConsumerWidget {
             icon: const Icon(Icons.sync_rounded),
             tooltip: 'Sync DigiLocker',
             onPressed: () async {
-              await ref.read(documentsRepositoryProvider).syncDigiLocker();
+              final uid = user?.id ?? 'demo_user_001';
+              await ref.read(documentsRepositoryProvider).syncDigiLocker(uid);
               ref.invalidate(userDocumentsProvider);
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
