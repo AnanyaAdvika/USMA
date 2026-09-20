@@ -22,6 +22,7 @@ import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/verification/presentation/unified_verification_screen.dart';
 import '../../features/coverage_gap/presentation/admin_analytics_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/verification/presentation/integration_status_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -105,6 +106,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.adminAnalytics,
         builder: (context, state) => const AdminAnalyticsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.integrationStatus,
+        builder: (context, state) => const IntegrationStatusScreen(),
       ),
       GoRoute(
         path: AppRoutes.notifications,

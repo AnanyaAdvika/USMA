@@ -19,6 +19,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String verification = '/verification';
   static const String adminAnalytics = '/admin-analytics';
+  static const String integrationStatus = '/integration-status';
   static const String settings = '/settings';
 
   static String schemeDetailPath(String id) => '/schemes/$id';
