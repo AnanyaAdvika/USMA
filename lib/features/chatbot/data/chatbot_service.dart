@@ -1,149 +1,205 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+
+import '../../../core/config/app_config.dart';
+import '../../../core/errors/failures.dart';
+import '../../applications/data/applications_repository.dart';
+import '../../auth/data/auth_repository.dart';
+import '../domain/jago_chatbot.dart';
 import '../domain/models/chat_message_model.dart';
 
-import '../../../../core/config/api_keys.dart';
+class FaqEntry {
+  final String question;
+  final String answer;
+  final List<String> keywords;
 
-// =========================================================================
-// ⚠️ GEMINI API KEY CONFIGURATION ⚠️
-// Prioritizes compile-time --dart-define=GEMINI_API_KEY, then local config.
-// =========================================================================
-const String geminiApiKey = String.fromEnvironment(
-  'GEMINI_API_KEY',
-  defaultValue: localGeminiApiKey,
-);
+  const FaqEntry({
+    required this.question,
+    required this.answer,
+    required this.keywords,
+  });
+}
 
-class ChatbotService {
-  late GenerativeModel _model;
-  late ChatSession _chat;
-  String _faqContext = '';
-  bool _isInitialized = false;
+class MockJagoChatbot implements JagoChatbot {
+  MockJagoChatbot({AssetBundle? bundle}) : _bundle = bundle ?? rootBundle;
 
-  ChatbotService() {
-    _initializeModel();
-  }
+  final AssetBundle _bundle;
+  List<FaqEntry>? _faq;
 
-  Future<void> _initializeModel() async {
+  Future<List<FaqEntry>> _loadFaq() async {
+    if (_faq != null) return _faq!;
     try {
-      // Load FAQ JSON to provide context to Gemini
-      final jsonString = await rootBundle.loadString('assets/faq/faq.json');
-      final list = json.decode(jsonString) as List<dynamic>;
-      
-      _faqContext = list.map((e) => 'Q: ${e['question']}\nA: ${e['answer']}').join('\n\n');
-
-      final systemInstruction = '''
-You are MoTA Saathi, an intelligent and friendly AI assistant for the Ministry of Tribal Affairs (MoTA) scholarship platform called USMA.
-Your goal is to guide Scheduled Tribe (ST) students in India regarding scholarships.
-You must be polite, encouraging, and clear.
-Use the following FAQ data as your source of truth for any scholarship details. Do NOT make up information about schemes.
-If the user asks a question not covered by the context, guide them to contact the MoTA helpline.
-
-FAQ CONTEXT:
-$_faqContext
-''';
-
-      _model = GenerativeModel(
-        model: 'gemini-3.6-flash',
-        apiKey: geminiApiKey,
-        systemInstruction: Content.system(systemInstruction),
-      );
-      
-      _chat = _model.startChat();
-      _isInitialized = true;
-    } catch (e) {
-      debugPrint('Error initializing Gemini model: $e');
-    }
-  }
-
-  Future<ChatMessageModel> answerQuestion(String query) async {
-    if (geminiApiKey == 'YOUR_API_KEY_HERE' || geminiApiKey.isEmpty) {
-      return ChatMessageModel.bot(
-        '⚠️ **API Key Missing!**\n\nPlease add your Gemini API key in `lib/features/chatbot/data/chatbot_service.dart` to enable intelligent conversations.',
-      );
-    }
-
-    if (!_isInitialized) {
-      await _initializeModel();
-    }
-
-    try {
-      final response = await _chat.sendMessage(Content.text(query));
-      final replyText = response.text ?? 'I apologize, but I am unable to process that request right now.';
-      
-      // Determine some default suggestions based on the query, to keep the UI interactive
-      List<String> suggestions = [];
-      final lower = query.toLowerCase();
-      if (lower.contains('income') || lower.contains('eligibility')) {
-        suggestions = ['What documents are required?', 'How to apply?'];
-      } else if (lower.contains('document') || lower.contains('certificate')) {
-        suggestions = ['How to upload?', 'Income certificate limits'];
-      } else {
-        suggestions = ['Check my eligibility', 'Track application status', 'List of schemes'];
+      final raw = await _bundle.loadString('assets/faq/faq.json');
+      final list = json.decode(raw);
+      if (list is! List) {
+        throw const ParseFailure('FAQ file must be a JSON list.');
       }
-
-      return ChatMessageModel.bot(replyText, suggestions: suggestions);
-    } catch (e) {
-      debugPrint('Gemini Chatbot Error: $e');
-      return ChatMessageModel.bot(
-        'Sorry, I am having trouble connecting to my AI brain right now. Please check your internet connection or try again later.',
-      );
+      _faq = list.map((e) {
+        final map = Map<String, dynamic>.from(e as Map);
+        return FaqEntry(
+          question: map['question']?.toString() ?? '',
+          answer: map['answer']?.toString() ?? '',
+          keywords: List<String>.from(map['keywords'] ?? const []),
+        );
+      }).toList();
+      return _faq!;
+    } on Failure {
+      rethrow;
+    } on FormatException catch (e) {
+      throw ParseFailure('FAQ JSON is invalid: ${e.message}');
     }
   }
 
-  void resetChatSession() {
-    if (_isInitialized) {
-      _chat = _model.startChat();
+  @override
+  Future<ChatMessageModel> answer({
+    required String query,
+    required JagoStudentContext context,
+  }) async {
+    final faq = await _loadFaq();
+    final lower = query.toLowerCase();
+
+    final milestone = _milestoneAlert(context);
+    if (lower.contains('status') ||
+        lower.contains('milestone') ||
+        lower.contains('स्थिति') ||
+        lower.contains('alert')) {
+      return ChatMessageModel.bot(
+        '${AppConfig.simulatedLabel} JAGO\n$milestone',
+        suggestions: const [
+          'What documents do I need?',
+          'Can I hold two scholarships?',
+        ],
+      );
     }
+
+    FaqEntry? best;
+    var bestScore = 0;
+    for (final entry in faq) {
+      var score = 0;
+      for (final key in entry.keywords) {
+        if (lower.contains(key.toLowerCase())) score += 2;
+      }
+      if (lower.contains(entry.question.toLowerCase().split(' ').first)) {
+        score += 1;
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        best = entry;
+      }
+    }
+
+    final preface = [
+      '${AppConfig.simulatedLabel} JAGO for ${context.studentName}',
+      if (context.activeSchemeTitle != null)
+        'Active scheme: ${context.activeSchemeTitle} (${context.applicationStatus ?? 'n/a'}).',
+      if (context.pendingActions.isNotEmpty)
+        'Pending: ${context.pendingActions.join('; ')}',
+    ].join('\n');
+
+    if (best == null || bestScore == 0) {
+      return ChatMessageModel.bot(
+        '$preface\nI do not have a matching FAQ. Ask about schemes, documents, DBT, or deficiency.',
+        suggestions: const [
+          'Which scholarships can I apply for?',
+          'What documents are required?',
+          'Application status',
+        ],
+      );
+    }
+
+    return ChatMessageModel.bot(
+      '$preface\n\n${best.answer}',
+      suggestions: const [
+        'Application status',
+        'Can I hold two scholarships?',
+        'How does DigiLocker work?',
+      ],
+    );
+  }
+
+  String _milestoneAlert(JagoStudentContext context) {
+    final pending = context.pendingActions.isEmpty
+        ? 'No open deficiencies.'
+        : 'Pending actions: ${context.pendingActions.join('; ')}';
+    return 'Hello ${context.studentName}. '
+        'Scheme: ${context.activeSchemeTitle ?? 'none'}. '
+        'Stage: ${context.applicationStatus ?? 'none'}. $pending';
   }
 }
 
-final chatbotServiceProvider = Provider<ChatbotService>((ref) {
-  return ChatbotService();
+class LiveJagoChatbot implements JagoChatbot {
+  @override
+  Future<ChatMessageModel> answer({
+    required String query,
+    required JagoStudentContext context,
+  }) async {
+    throw const IntegrationFailure(
+      'JAGO is not a public client API. Connect it through the USMA backend — this app does not invent a government chatbot endpoint.',
+    );
+  }
+}
+
+final jagoChatbotProvider = Provider<JagoChatbot>((ref) {
+  if (AppConfig.isDemo) return MockJagoChatbot();
+  return LiveJagoChatbot();
 });
 
 class ChatbotNotifier extends StateNotifier<List<ChatMessageModel>> {
-  final ChatbotService _service;
-
-  ChatbotNotifier(this._service)
+  ChatbotNotifier(this._bot, this._context)
       : super([
           ChatMessageModel.bot(
-            'Johar & Namaste! 🙏 I am MoTA Saathi, your AI assistant powered by Gemini. I can answer any questions about Ministry of Tribal Affairs scholarships based on our official dataset. How can I help you today?',
-            suggestions: [
+            AppConfig.isDemo
+                ? '${AppConfig.simulatedLabel} JAGO: student-specific help for ${_context.studentName}. Ask about schemes, tracking, documents, or DBT.'
+                : 'JAGO is available only through the live USMA backend.',
+            suggestions: const [
+              'Application status',
               'Which scholarships can I apply for?',
               'What documents do I need?',
-              'How does DBT PFMS payment work?',
-              'Income criteria for scholarships',
+              'Can I hold two scholarships?',
             ],
           ),
         ]);
 
-  Future<void> sendMessage(String text) async {
-    final userMsg = ChatMessageModel.user(text);
-    state = [...state, userMsg];
+  final JagoChatbot _bot;
+  final JagoStudentContext _context;
 
-    final botReply = await _service.answerQuestion(text);
-    state = [...state, botReply];
+  Future<void> sendMessage(String text) async {
+    state = [...state, ChatMessageModel.user(text)];
+    try {
+      final reply = await _bot.answer(query: text, context: _context);
+      state = [...state, reply];
+    } on Failure catch (failure) {
+      state = [...state, ChatMessageModel.bot(failure.message)];
+    }
   }
 
   void clearChat() {
-    _service.resetChatSession();
     state = [
       ChatMessageModel.bot(
-        'Johar & Namaste! 🙏 I am MoTA Saathi, your AI assistant powered by Gemini. I can answer any questions about Ministry of Tribal Affairs scholarships based on our official dataset. How can I help you today?',
-        suggestions: [
-          'Which scholarships can I apply for?',
+        '${AppConfig.simulatedLabel} JAGO reset for ${_context.studentName}.',
+        suggestions: const [
+          'Application status',
           'What documents do I need?',
-          'How does DBT PFMS payment work?',
-          'Income criteria for scholarships',
         ],
       ),
     ];
   }
 }
 
-final chatMessagesProvider = StateNotifierProvider<ChatbotNotifier, List<ChatMessageModel>>((ref) {
-  return ChatbotNotifier(ref.watch(chatbotServiceProvider));
+final chatMessagesProvider =
+    StateNotifierProvider<ChatbotNotifier, List<ChatMessageModel>>((ref) {
+  final user = ref.watch(currentUserProvider);
+  final apps = ref.watch(userApplicationsProvider).asData?.value ?? const [];
+  final active = apps.where((a) => a.isActive).toList();
+  final context = JagoStudentContext(
+    studentName: user?.name ?? 'Student',
+    activeSchemeTitle: active.isEmpty ? null : active.first.schemeTitle,
+    applicationStatus: active.isEmpty ? null : active.first.status,
+    pendingActions: [
+      for (final app in active) ...app.deficiencies,
+    ],
+  );
+  return ChatbotNotifier(ref.watch(jagoChatbotProvider), context);
 });

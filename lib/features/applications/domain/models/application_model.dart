@@ -13,12 +13,11 @@ class TimelineEvent {
 
   factory TimelineEvent.fromMap(Map<String, dynamic> map) {
     return TimelineEvent(
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      timestamp: map['timestamp'] != null
-          ? DateTime.tryParse(map['timestamp'].toString()) ?? DateTime.now()
-          : DateTime.now(),
-      isCompleted: map['isCompleted'] ?? false,
+      title: map['title']?.toString() ?? '',
+      description: map['description']?.toString() ?? '',
+      timestamp: DateTime.tryParse(map['timestamp']?.toString() ?? '') ??
+          DateTime.fromMillisecondsSinceEpoch(0),
+      isCompleted: map['isCompleted'] == true,
     );
   }
 
@@ -41,11 +40,15 @@ class ApplicationModel {
   final String instituteName;
   final String courseName;
   final double sanctionedAmount;
-  final String status; // 'SUBMITTED', 'INSTITUTE_VERIFIED', 'STATE_VERIFIED', 'MINISTRY_APPROVED', 'DISBURSED', 'ACTION_REQUIRED', 'REJECTED'
+  /// Canonical stages: submitted → under_verification → deficiency_raised
+  /// → sanctioned → disbursed | rejected
+  final String status;
   final DateTime submittedAt;
   final DateTime updatedAt;
   final List<TimelineEvent> timeline;
-  final String? defectRemark;
+  final List<String> deficiencies;
+  final bool manualReviewRequired;
+  final bool simulated;
 
   const ApplicationModel({
     required this.id,
@@ -60,31 +63,38 @@ class ApplicationModel {
     required this.submittedAt,
     required this.updatedAt,
     required this.timeline,
-    this.defectRemark,
+    this.deficiencies = const [],
+    this.manualReviewRequired = false,
+    this.simulated = false,
   });
+
+  bool get isActive {
+    const closed = {'disbursed', 'rejected'};
+    return !closed.contains(status);
+  }
 
   factory ApplicationModel.fromMap(Map<String, dynamic> map, String docId) {
     final rawTimeline = map['timeline'] as List<dynamic>? ?? [];
     return ApplicationModel(
       id: docId,
-      userId: map['userId'] ?? '',
-      schemeId: map['schemeId'] ?? '',
-      schemeTitle: map['schemeTitle'] ?? '',
-      academicYear: map['academicYear'] ?? '2026-2027',
-      instituteName: map['instituteName'] ?? '',
-      courseName: map['courseName'] ?? '',
-      sanctionedAmount: (map['sanctionedAmount'] as num?)?.toDouble() ?? 0.0,
-      status: map['status'] ?? 'SUBMITTED',
-      submittedAt: map['submittedAt'] != null
-          ? DateTime.tryParse(map['submittedAt'].toString()) ?? DateTime.now()
-          : DateTime.now(),
-      updatedAt: map['updatedAt'] != null
-          ? DateTime.tryParse(map['updatedAt'].toString()) ?? DateTime.now()
-          : DateTime.now(),
+      userId: map['userId']?.toString() ?? '',
+      schemeId: map['schemeId']?.toString() ?? '',
+      schemeTitle: map['schemeTitle']?.toString() ?? '',
+      academicYear: map['academicYear']?.toString() ?? '2026-2027',
+      instituteName: map['instituteName']?.toString() ?? '',
+      courseName: map['courseName']?.toString() ?? '',
+      sanctionedAmount: (map['sanctionedAmount'] as num?)?.toDouble() ?? 0,
+      status: map['status']?.toString() ?? 'submitted',
+      submittedAt: DateTime.tryParse(map['submittedAt']?.toString() ?? '') ??
+          DateTime.fromMillisecondsSinceEpoch(0),
+      updatedAt: DateTime.tryParse(map['updatedAt']?.toString() ?? '') ??
+          DateTime.fromMillisecondsSinceEpoch(0),
       timeline: rawTimeline
-          .map((e) => TimelineEvent.fromMap(Map<String, dynamic>.from(e)))
+          .map((e) => TimelineEvent.fromMap(Map<String, dynamic>.from(e as Map)))
           .toList(),
-      defectRemark: map['defectRemark'],
+      deficiencies: List<String>.from(map['deficiencies'] ?? const []),
+      manualReviewRequired: map['manualReviewRequired'] == true,
+      simulated: map['simulated'] == true,
     );
   }
 
@@ -101,7 +111,9 @@ class ApplicationModel {
       'submittedAt': submittedAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'timeline': timeline.map((e) => e.toMap()).toList(),
-      'defectRemark': defectRemark,
+      'deficiencies': deficiencies,
+      'manualReviewRequired': manualReviewRequired,
+      'simulated': simulated,
     };
   }
 }

@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+
 import 'failures.dart';
 
 class ErrorMapper {
-  static Failure map(dynamic error) {
+  static Failure map(Object error) {
     if (error is Failure) return error;
 
     if (error is FirebaseAuthException) {
@@ -18,7 +20,9 @@ class ErrorMapper {
         case 'session-expired':
           return const AuthFailure('OTP has expired. Please request a new one.');
         case 'too-many-requests':
-          return const AuthFailure('Too many attempts. Please wait a few moments.');
+          return const AuthFailure(
+            'Too many attempts. Please wait a few moments.',
+          );
         default:
           return AuthFailure(error.message ?? 'Authentication error.');
       }
@@ -26,6 +30,10 @@ class ErrorMapper {
 
     if (error is FirebaseException) {
       return ServerFailure(error.message ?? 'Database operation failed.');
+    }
+
+    if (error is PlatformException) {
+      return ServerFailure(error.message ?? 'A platform error occurred.');
     }
 
     return ServerFailure(error.toString());
